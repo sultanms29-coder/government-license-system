@@ -2,8 +2,21 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>النظام الموحد لمتابعة التراخيص الحكومية — قسم العلاقات العامة والحكومية</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
+
+<!-- PWA & iOS -->
+<meta name="theme-color" content="#0F1419">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="متابعة التراخيص الحكومية">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png">
+
+<title>متابعة التراخيص الحكومية</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -714,6 +727,42 @@ tbody tr:last-child td{ border-bottom:none;}
   body{ background:#fff; color:#111;}
   .report-doc{ background:#fff; color:#111; border:none;}
 }
+
+/* ============================= PWA / iOS SAFARI ============================= */
+html, body { min-height: 100%; }
+body {
+  min-height: 100dvh;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+  touch-action: manipulation;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+#app { min-height: 100dvh; }
+.sidebar {
+  padding-top: calc(22px + env(safe-area-inset-top));
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+}
+.topbar {
+  padding-top: calc(16px + env(safe-area-inset-top));
+}
+button, input, select, textarea { font-size: 16px; }
+@media (min-width: 981px) {
+  button, input, select, textarea { font-size: inherit; }
+}
+@media (max-width: 980px) {
+  .view { padding: 18px 14px calc(48px + env(safe-area-inset-bottom)); }
+  .topbar { padding-inline: 14px; flex-wrap: wrap; }
+  .sidebar { height: 100dvh; }
+  .modal { max-height: 84dvh; }
+  .overlay { padding: max(12px, env(safe-area-inset-top)) 10px max(12px, env(safe-area-inset-bottom)); }
+}
+@media (display-mode: standalone) {
+  body { user-select: none; -webkit-user-select: none; }
+  input, textarea { user-select: text; -webkit-user-select: text; }
+}
+
 </style>
 </head>
 <body>
@@ -740,9 +789,19 @@ tbody tr:last-child td{ border-bottom:none;}
 </script>
 
 <div id="introSeal">
-  <div class="seal-ring"><span>ع.ح</span></div>
-  <p>جارٍ تحميل النظام الموحد للتراخيص…</p>
+  <div style="width:128px;height:128px;border-radius:28px;background:#fff;display:flex;align-items:center;justify-content:center;padding:12px;box-shadow:0 18px 50px rgba(0,0,0,.35);">
+    <img src="./icons/icon-512.png" alt="شعار شركة الأندية للرياضة" style="width:100%;height:100%;object-fit:contain;border-radius:20px;">
+  </div>
+  <h2 style="font-size:19px;font-weight:900;color:var(--text);margin-top:4px;">متابعة التراخيص الحكومية</h2>
+  <p style="color:var(--text-muted);font-size:12.5px;">شركة الأندية للرياضة</p>
+  <div style="width:110px;height:3px;background:var(--border-soft);border-radius:99px;overflow:hidden;margin-top:4px;">
+    <div style="height:100%;width:45%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:99px;animation:splashMove 1.2s ease-in-out infinite alternate;"></div>
+  </div>
 </div>
+
+<style>
+@keyframes splashMove{from{transform:translateX(55px)}to{transform:translateX(-55px)}}
+</style>
 
 <!-- ============ ROLE GATE ============ -->
 <div id="roleGate" style="display:none;">
@@ -2745,5 +2804,30 @@ function bindGlobalEvents(){
 init();
 
 </script>
+
+<script>
+(function () {
+  const showNetToast = (text, icon) => {
+    try {
+      if (typeof toast === 'function') toast(text, icon);
+    } catch (_) {}
+  };
+
+  window.addEventListener('offline', () => showNetToast('أنت الآن دون اتصال — ستتوفر البيانات المحفوظة محليًا', '📴'));
+  window.addEventListener('online', () => showNetToast('عاد الاتصال بالإنترنت', '🌐'));
+
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    window.addEventListener('load', async () => {
+      try {
+        const registration = await navigator.serviceWorker.register('./service-worker.js', { scope: './' });
+        registration.update().catch(() => {});
+      } catch (err) {
+        console.warn('Service Worker registration failed:', err);
+      }
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
