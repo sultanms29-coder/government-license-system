@@ -95,6 +95,7 @@ h1{font-size:24px;margin:0 0 5px}
 .team-node{text-align:center;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:12px 8px}
 .team-node b{display:block;font-size:12px}
 .team-node span{color:var(--muted);font-size:11px}
+.team-photo-node img{width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid rgba(212,175,55,.48);margin-bottom:9px;background:#fff}
 .footer{text-align:center;color:#5C6670;font-size:11px;padding:30px 0 8px}
 @media(max-width:800px){
  .hero,.about-grid{grid-template-columns:1fr}.systems{grid-template-columns:1fr}
@@ -169,11 +170,11 @@ h1{font-size:24px;margin:0 0 5px}
  <div class="org-card">
   <div class="leaders">
    <div class="person">
-    <img src="./assets/team/mishari.jpg" alt="مدير إدارة العلاقات العامة">
+    <img src="./assets/team/mishari.jpg?v=3" alt="مدير إدارة العلاقات العامة">
     <div><h3>مشاري الوعلان</h3><p>مدير إدارة العلاقات العامة</p></div>
    </div>
    <div class="person">
-    <img src="./assets/team/sultan.jpg" alt="مدير القسم">
+    <img src="./assets/team/sultan.jpg?v=3" alt="مدير القسم">
     <div><h3>سلطان الهزازي</h3><p>مدير القسم</p></div>
    </div>
   </div>
@@ -190,8 +191,14 @@ h1{font-size:24px;margin:0 0 5px}
   <div class="org-node"><b>مشرف القسم</b><span>محمد العنبر</span></div>
   <div class="org-line"></div>
   <div class="team-row">
-   <div class="team-node"><b>منسق أول</b><span>متعب الغزواني</span></div>
-   <div class="team-node"><b>منسق ثاني</b><span>محمد العتيبي</span></div>
+   <div class="team-node team-photo-node">
+    <img src="./assets/team/muteb_ghazwani.jpg?v=3" alt="متعب الغزواني">
+    <b>منسق أول</b><span>متعب الغزواني</span>
+   </div>
+   <div class="team-node team-photo-node">
+    <img src="./assets/team/mohammed_alotaibi.jpg?v=3" alt="محمد العتيبي">
+    <b>منسق ثاني</b><span>محمد العتيبي</span>
+   </div>
    <div class="team-node"><b>الدعم القانوني</b><span>فارس الحربي</span></div>
   </div>
  </div>
