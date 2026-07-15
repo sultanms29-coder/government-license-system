@@ -1,19 +1,14 @@
 {
-  "name": "متابعة التراخيص الحكومية",
-  "short_name": "التراخيص الحكومية",
-  "description": "تطبيق شركة الأندية للرياضة لمتابعة التراخيص الحكومية والتنبيهات والفروع.",
+  "name": "منصة العلاقات العامة والحكومية",
+  "short_name": "العلاقات الحكومية",
+  "description": "منصة شركة الأندية للرياضة للأنظمة المعتمدة.",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "display_override": [
-    "standalone",
-    "minimal-ui"
-  ],
   "background_color": "#0F1419",
   "theme_color": "#0F1419",
-  "orientation": "any",
   "icons": [
     {
       "src": "./icons/icon-192.png",
