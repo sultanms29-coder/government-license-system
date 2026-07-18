@@ -711,6 +711,7 @@ tbody tr:last-child td{ border-bottom:none;}
   .report-doc{ background:#fff; color:#111; border:none;}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -930,20 +931,20 @@ tbody tr:last-child td{ border-bottom:none;}
     <div class="modal-body">
       <div class="report-note" style="margin-top:0; margin-bottom:16px;">
         لجعل التحديثات تنتقل تلقائياً بين كل الأجهزة والموظفين الذين يفتحون هذا الملف، يستخدم التطبيق مساحة تخزين سحابية مجانية من
-        <b>jsonbin.io</b>. الخطوات (مرة واحدة فقط):
-        <br>1) أنشئ حساباً مجانياً على jsonbin.io.
-        <br>2) من "API Keys" انسخ قيمة <b>X-Master-Key</b>.
+        <b>Supabase</b>. الخطوات (مرة واحدة فقط):
+        <br>1) أنشئ حساباً مجانياً على Supabase.
+        <br>2) من "API Keys" انسخ قيمة <b>Publishable Key</b>.
         <br>3) الصقها بالأسفل واضغط "إنشاء مساحة تخزين جديدة" من أي جهاز (مرة واحدة).
         <br>4) انسخ "معرّف المساحة" الذي سيظهر، والصقه مع نفس المفتاح في باقي الأجهزة.
         <br><b>تنبيه:</b> إن أرفقت ملفات (رخص ممسوحة ضوئياً)، سيكبر حجم البيانات المتزامنة؛ يُفضّل إبقاء كل مرفق أقل من 1 ميجابايت.
-        <br><b>لو ظهرت رسالة فشل:</b> تأكد أنك نسخت <b>X-Master-Key</b> تحديداً من صفحة "API Keys" (وليس "Access Key")، وأن الحساب مفعّل. الرسالة الآن تعرض سبب الخطأ الفعلي من jsonbin.io لتشخيصه بدقة.
+        <br><b>لو ظهرت رسالة فشل:</b> تأكد أنك نسخت <b>Publishable Key</b> تحديداً من صفحة "API Keys" (وليس "Access Key")، وأن الحساب مفعّل. الرسالة الآن تعرض سبب الخطأ الفعلي من Supabase لتشخيصه بدقة.
       </div>
-      <div class="field"><label>X-Master-Key (من jsonbin.io)</label><input type="text" id="cfgApiKey" placeholder="الصق المفتاح هنا" autocomplete="off"></div>
-      <div class="field"><label>معرّف مساحة التخزين (Bin ID)</label><input type="text" id="cfgBinId" placeholder="سيظهر هنا تلقائياً بعد الإنشاء، أو الصق معرّفاً موجوداً" autocomplete="off"></div>
+      <div class="field"><label>Supabase Publishable Key</label><input type="text" id="cfgApiKey" placeholder="sb_publishable_..." autocomplete="off"></div>
+      <div class="field"><label>Workspace ID</label><input type="text" id="cfgBinId" placeholder="alandiyah-shomoos" autocomplete="off"></div>
       <div class="field-hint" id="cfgHint">لا يوجد إعداد محفوظ على هذا الجهاز بعد.</div>
     </div>
     <div class="modal-foot" style="flex-wrap:wrap;">
-      <button class="btn btn-ghost" id="createBinBtn">+ إنشاء مساحة تخزين جديدة</button>
+      <button class="btn btn-ghost" id="createBinBtn">تهيئة مساحة شموس</button>
       <button class="btn btn-ghost" id="syncNowBtn">🔄 مزامنة الآن</button>
       <button class="btn btn-danger" id="disconnectSyncBtn">فصل المزامنة</button>
       <button class="btn btn-gold" id="saveSyncBtn">حفظ الإعدادات</button>
@@ -1267,7 +1268,7 @@ async function safeErrText(res){
   catch(e){ return `HTTP ${res.status}`; }
 }
 
-/* ---------------------------- CLOUD SYNC (jsonbin.io) ---------------------------- */
+/* ---------------------------- CLOUD SYNC (Supabase) ---------------------------- */
 function setSyncStatus(kind, text){
   const box = document.getElementById('syncStatusBox');
   if(!box) return;
@@ -1277,7 +1278,7 @@ function setSyncStatus(kind, text){
 async function cloudPull(silent){
   if(!isCloudConfigured()) return null;
   try{
-    const res = await fetch(`https://api.jsonbin.io/v3/b/${cloudCfg.binId}/latest`, { headers:{ 'X-Master-Key': cloudCfg.apiKey } });
+    const res = await fetch(`https://api.Supabase/v3/b/${cloudCfg.binId}/latest`, { headers:{ 'Publishable Key': cloudCfg.apiKey } });
     if(!res.ok){ const errTxt = await safeErrText(res); throw new Error(errTxt); }
     const json = await res.json();
     return await parseSyncPayload(json.record);
@@ -1287,8 +1288,8 @@ async function cloudPush(){
   if(!isCloudConfigured()) return { ok:false, error:'لم تُفعّل المزامنة' };
   try{
     const body = await buildSyncPayload();
-    const res = await fetch(`https://api.jsonbin.io/v3/b/${cloudCfg.binId}`, {
-      method:'PUT', headers:{ 'Content-Type':'application/json', 'X-Master-Key':cloudCfg.apiKey }, body
+    const res = await fetch(`https://api.Supabase/v3/b/${cloudCfg.binId}`, {
+      method:'PUT', headers:{ 'Content-Type':'application/json', 'Publishable Key':cloudCfg.apiKey }, body
     });
     if(!res.ok){ const errTxt = await safeErrText(res); console.error('cloudPush error:', errTxt); return { ok:false, error:errTxt }; }
     return { ok:true, error:null };
@@ -1296,13 +1297,13 @@ async function cloudPush(){
 }
 async function createNewBin(){
   const key = document.getElementById('cfgApiKey').value.trim();
-  if(!key){ toast('الرجاء إدخال X-Master-Key أولاً', '⚠'); return; }
+  if(!key){ toast('الرجاء إدخال Publishable Key أولاً', '⚠'); return; }
   cloudCfg.apiKey = key;
   setSyncStatus('syncing', 'جارٍ إنشاء مساحة التخزين…');
   try{
     const body = await buildSyncPayload();
-    const res = await fetch('https://api.jsonbin.io/v3/b', {
-      method:'POST', headers:{ 'Content-Type':'application/json', 'X-Master-Key':key, 'X-Bin-Name':'srco-shomoos-tracker' }, body
+    const res = await fetch('https://api.Supabase/v3/b', {
+      method:'POST', headers:{ 'Content-Type':'application/json', 'Publishable Key':key, 'X-Bin-Name':'srco-shomoos-tracker' }, body
     });
     if(!res.ok){ const errTxt = await safeErrText(res); throw new Error(errTxt); }
     const json = await res.json();
@@ -2128,5 +2129,61 @@ init();
  b.onclick=()=>{const user=(window.currentUser&&currentUser.username)||(window.currentUser&&currentUser.name)||'default';const p=prompt('أدخل الرقم السري الجديد (4 إلى 8 أرقام):');if(!p)return;if(!/^\d{4,8}$/.test(p))return alert('الرقم يجب أن يكون من 4 إلى 8 أرقام');const map=JSON.parse(localStorage.getItem('v42-user-pins')||'{}');map[user]=p;localStorage.setItem('v42-user-pins',JSON.stringify(map));alert('تم تحديث الرقم السري لهذا المستخدم')};document.body.appendChild(b);
 })();
 </script>
+
+<script id="v7-shomoos-supabase-adapter">
+(()=>{
+ const PROJECT_URL='https://jpoijjlgrfsctritfpbrp.supabase.co';
+ const CFG='srco-shomoos-supabase-v1',CLIENT='srco-shomoos-client-v1';
+ let scfg=JSON.parse(localStorage.getItem(CFG)||'null')||{projectUrl:PROJECT_URL,anonKey:'',workspaceId:'alandiyah-shomoos'};
+ let sb=null,ch=null,remoteRevision=0;
+ const cid=localStorage.getItem(CLIENT)||(()=>{const x='sh-'+Date.now()+'-'+Math.random().toString(36).slice(2);localStorage.setItem(CLIENT,x);return x})();
+ window.isCloudConfigured=()=>!!(scfg.projectUrl&&scfg.anonKey&&scfg.workspaceId);
+ function client(){if(!sb&&window.supabase)sb=window.supabase.createClient(scfg.projectUrl,scfg.anonKey,{auth:{persistSession:false}});return sb}
+ window.cloudPull=async silent=>{
+  if(!isCloudConfigured())return null;
+  try{const {data,error}=await client().from('app_state').select('*').eq('workspace_id',scfg.workspaceId).maybeSingle();if(error)throw error;if(!data||!data.payload)return null;remoteRevision=Number(data.revision||0);return data.payload}catch(e){if(!silent)toast('تعذر جلب بيانات شموس من Supabase','⚠');return null}
+ };
+ window.cloudPush=async()=>{
+  if(!isCloudConfigured())return {ok:false,error:'لم يتم الربط'};
+  try{const rev=Date.now();const {error}=await client().from('app_state').upsert({workspace_id:scfg.workspaceId,payload:state,revision:rev,client_id:cid,updated_by:currentUser?currentUser.name:'جهاز غير معروف',updated_at:new Date().toISOString()},{onConflict:'workspace_id'});if(error)throw error;remoteRevision=rev;return {ok:true}}catch(e){return {ok:false,error:e.message||e}}
+ };
+ window.createNewBin=async()=>{
+  scfg.anonKey=document.getElementById('cfgApiKey').value.trim();
+  scfg.workspaceId=document.getElementById('cfgBinId').value.trim()||'alandiyah-shomoos';
+  if(!scfg.anonKey)return toast('ألصق Publishable Key أولاً','⚠');
+  localStorage.setItem(CFG,JSON.stringify(scfg));sb=null;
+  const r=await cloudPush();toast(r.ok?'تم تهيئة مساحة شموس على Supabase':'تعذر التهيئة: '+r.error,r.ok?'☁':'⚠');
+  if(r.ok)subscribeShomoos();
+ };
+ window.fillSyncModalFields=()=>{
+  document.getElementById('cfgApiKey').value=scfg.anonKey||'';
+  document.getElementById('cfgBinId').value=scfg.workspaceId||'alandiyah-shomoos';
+  document.getElementById('cfgHint').textContent=isCloudConfigured()?'مزامنة Supabase مفعلة على هذا الجهاز.':'ألصق Publishable Key المستخدم في بقية الأنظمة.';
+ };
+ function subscribeShomoos(){
+  if(!isCloudConfigured())return;if(ch)try{client().removeChannel(ch)}catch(e){}
+  ch=client().channel('alandiyah-shomoos-v7').on('postgres_changes',{event:'*',schema:'public',table:'app_state',filter:'workspace_id=eq.'+scfg.workspaceId},p=>{
+   const r=p.new;if(!r||r.client_id===cid||Number(r.revision||0)<=remoteRevision)return;
+   remoteRevision=Number(r.revision||0);state=r.payload;safeLocalSet(LOCAL_CACHE_KEY,JSON.stringify(state));
+   renderNavCounts();renderView(currentView);updateBell();toast('وصل تحديث شموس من '+(r.updated_by||'جهاز آخر'),'☁');
+  }).subscribe();
+ }
+ document.addEventListener('DOMContentLoaded',()=>{
+  const save=document.getElementById('saveSyncBtn');
+  if(save)save.onclick=async()=>{
+   scfg.anonKey=document.getElementById('cfgApiKey').value.trim();
+   scfg.workspaceId=document.getElementById('cfgBinId').value.trim()||'alandiyah-shomoos';
+   localStorage.setItem(CFG,JSON.stringify(scfg));sb=null;
+   const cloud=await cloudPull(true);
+   if(cloud&&confirm('تم العثور على بيانات شموس في Supabase. هل تريد استخدام النسخة السحابية؟')){state=cloud;safeLocalSet(LOCAL_CACHE_KEY,JSON.stringify(state));renderNavCounts();renderView(currentView)}
+   else await cloudPush();
+   subscribeShomoos();closeModal('modalSync');toast('تم ربط شموس مع Supabase','☁');
+  };
+  const disc=document.getElementById('disconnectSyncBtn');if(disc)disc.onclick=()=>{localStorage.removeItem(CFG);scfg={projectUrl:PROJECT_URL,anonKey:'',workspaceId:'alandiyah-shomoos'};sb=null;toast('تم فصل مزامنة شموس على هذا الجهاز','↺');closeModal('modalSync')};
+  if(isCloudConfigured())subscribeShomoos();
+ });
+})();
+</script>
+
 </body>
 </html>

@@ -1589,7 +1589,7 @@ function startAutoSync(){
   autoSyncTimer=setInterval(async()=>{
     if(!isCloudConfigured()||cloudBusy||document.visibilityState!=='visible') return;
     const cloud=await cloudPull(true);
-    if(cloud && JSON.stringify(cloud)!==JSON.stringify(state)) applyCloudState(cloud,lastCloudVersion,'جهاز آخر');
+    if(cloud && JSON.stringify(cloud)!==JSON.stringify(state)) applyCloudState(cloud,lastCloudVersion,'');
   },15000);
 }
 

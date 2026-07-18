@@ -1104,9 +1104,7 @@ function applyCloudState(payload,revision,updatedBy){
   safeLocalSet(LOCAL_CACHE_KEY,JSON.stringify(state));
   renderNavCounts(); renderView(currentView); updateBell();
   applyPermissionsUI();
-  if(updatedBy && updatedBy!==(currentUser&&currentUser.name)){
-    toast('وصل تحديث حقيقي من '+updatedBy,'☁');
-  }
+  if(updatedBy && (!currentUser || updatedBy!==currentUser.name) && updatedBy!=='جهاز آخر'){toast('وصل تحديث من '+updatedBy,'☁');}
 }
 function subscribeRealtime(){
   if(!isCloudConfigured())return;
@@ -1136,7 +1134,7 @@ function startAutoSync(){
   clearInterval(autoSyncTimer);
   if(isCloudConfigured()){initSupabaseClient();subscribeRealtime();}
   autoSyncTimer=setInterval(async()=>{
-    if(!isCloudConfigured()||cloudBusy||document.visibilityState!=='visible')return;
+    if(!isCloudConfigured()||cloudBusy||document.visibilityState!=='visible'||document.querySelectorAll('.overlay.show').length)return;
     const before=lastCloudVersion;
     const cloud=await cloudPull(true);
     const remoteRevision=lastCloudVersion;

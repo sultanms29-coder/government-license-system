@@ -1153,7 +1153,7 @@ function applyCloudState(payload,revision,updatedBy){
   safeLocalSet(LOCAL_CACHE_KEY,JSON.stringify(state));
   renderNavCounts(); renderView(currentView); updateBell();
   applyPermissionsUI();
-  if(updatedBy)toast('وصل تحديث لحظي من '+updatedBy,'☁');
+  if(updatedBy && (!currentUser || updatedBy!==currentUser.name) && updatedBy!=='جهاز آخر')toast('وصل تحديث من '+updatedBy,'☁');
 }
 function subscribeRealtime(){
   if(!isCloudConfigured())return;
@@ -1183,9 +1183,9 @@ function startAutoSync(){
   clearInterval(autoSyncTimer);
   if(isCloudConfigured()){initSupabaseClient();subscribeRealtime();}
   autoSyncTimer=setInterval(async()=>{
-    if(!isCloudConfigured()||cloudBusy||document.visibilityState!=='visible')return;
+    if(!isCloudConfigured()||cloudBusy||document.visibilityState!=='visible'||document.querySelectorAll('.overlay.show').length)return;
     const cloud=await cloudPull(true);
-    if(cloud&&JSON.stringify(cloud)!==JSON.stringify(state))applyCloudState(cloud,lastCloudVersion,'جهاز آخر');
+    if(cloud&&JSON.stringify(cloud)!==JSON.stringify(state))applyCloudState(cloud,lastCloudVersion,'');
   },15000);
 }
 
