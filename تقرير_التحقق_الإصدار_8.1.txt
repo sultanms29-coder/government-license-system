@@ -1,0 +1,26 @@
+الإصدار 8.1 — تقرير التحقق
+
+الدخول المباشر بعد اختيار المستخدم أول مرة:
+- licenses: مفعّل
+- projects: يحتاج مراجعة
+- shomoos: يحتاج مراجعة
+- contracts: مفعّل
+- cases: مفعّل
+
+فحص الأكواد المضافة:
+- licenses/v8-shared-control: سليم
+- licenses/v8-cloud-refresh: سليم
+- projects/v8-shared-control: سليم
+- projects/v8-cloud-refresh: سليم
+- contracts/v8-shared-control: سليم
+- contracts/v8-cloud-refresh: سليم
+- cases/v8-shared-control: سليم
+- cases/v8-cloud-refresh: سليم
+- shomoos/v8-shared-control: سليم
+- shomoos/v8-shomoos-refresh: سليم
+
+ملاحظات:
+- زر البيت موجود في الأنظمة الخمسة.
+- زر تحديث المزامنة متاح لجميع المستخدمين.
+- شموس يستخدم Supabase ومساحة alandiyah-shomoos.
+- تم تغيير معرف Cache لمنع تحميل النسخة السابقة.

@@ -710,6 +710,27 @@ tbody tr:last-child td{ border-bottom:none;}
   body{ background:#fff; color:#111;}
   .report-doc{ background:#fff; color:#111; border:none;}
 }
+
+/* ===== الإصدار 8.0 — تنقل ودخول ومزامنة موحدة ===== */
+.v8-home-btn,.v8-sync-btn{
+ position:fixed;z-index:9800;bottom:18px;width:48px;height:48px;border-radius:50%;
+ display:grid;place-items:center;border:1px solid rgba(255,255,255,.18);
+ background:rgba(7,18,29,.92);color:#fff;box-shadow:0 14px 35px rgba(0,0,0,.35);
+ cursor:pointer;font-size:20px;backdrop-filter:blur(12px)
+}
+.v8-home-btn{left:18px}.v8-sync-btn{left:76px}
+.v8-sync-btn.syncing{animation:v8spin 1s linear infinite}
+@keyframes v8spin{to{transform:rotate(360deg)}}
+.v8-user-chip{
+ position:fixed;z-index:9700;top:14px;left:14px;padding:8px 12px;border-radius:999px;
+ border:1px solid rgba(255,255,255,.14);background:rgba(7,18,29,.82);color:#fff;
+ font-size:10px;backdrop-filter:blur(12px)
+}
+@media(max-width:650px){
+ .v8-home-btn,.v8-sync-btn{bottom:12px;width:44px;height:44px}
+ .v8-home-btn{left:12px}.v8-sync-btn{left:64px}.v8-user-chip{top:8px;left:8px}
+}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -940,14 +961,14 @@ tbody tr:last-child td{ border-bottom:none;}
         <br><b>لو ظهرت رسالة فشل:</b> تأكد أنك نسخت <b>Publishable Key</b> تحديداً من صفحة "API Keys" (وليس "Access Key")، وأن الحساب مفعّل. الرسالة الآن تعرض سبب الخطأ الفعلي من Supabase لتشخيصه بدقة.
       </div>
       <div class="field"><label>Supabase Publishable Key</label><input type="text" id="cfgApiKey" placeholder="sb_publishable_..." autocomplete="off"></div>
-      <div class="field"><label>Workspace ID</label><input type="text" id="cfgBinId" placeholder="alandiyah-shomoos" autocomplete="off"></div>
+      <div class="field"><label>Workspace ID</label><input type="text" id="cfgBinId" readonly placeholder="alandiyah-shomoos" autocomplete="off"></div>
       <div class="field-hint" id="cfgHint">لا يوجد إعداد محفوظ على هذا الجهاز بعد.</div>
     </div>
     <div class="modal-foot" style="flex-wrap:wrap;">
       <button class="btn btn-ghost" id="createBinBtn">تهيئة مساحة شموس</button>
-      <button class="btn btn-ghost" id="syncNowBtn">🔄 مزامنة الآن</button>
+      <button class="btn btn-ghost" id="syncNowBtn">🔄 تحديث المزامنة للجميع</button>
       <button class="btn btn-danger" id="disconnectSyncBtn">فصل المزامنة</button>
-      <button class="btn btn-gold" id="saveSyncBtn">حفظ الإعدادات</button>
+      <button class="btn btn-gold" id="saveSyncBtn">حفظ إعدادات المزامنة</button>
     </div>
   </div>
 </div>
@@ -995,7 +1016,7 @@ let currentRole = null;   // 'admin' | 'pr' | 'hr'
 let currentUser = null;
 let listFilters = { q:"" };
 let saveTimer = null;
-let cloudCfg = { apiKey:"", binId:"" };
+let cloudCfg = { apiKey:"", binId:"alandiyah-shomoos" };
 let cloudBusy = false;
 let autoSyncTimer = null;
 let notifiedLog = {};
@@ -1007,7 +1028,7 @@ function safeLocalSet(key, val){ try{ localStorage.setItem(key, val); }catch(e){
 function safeLocalRemove(key){ try{ localStorage.removeItem(key); }catch(e){} }
 function loadCloudCfg(){
   const raw = safeLocalGet(LOCAL_CFG_KEY);
-  if(raw){ try{ cloudCfg = JSON.parse(raw); }catch(e){ cloudCfg={apiKey:"",binId:""}; } }
+  if(raw){ try{ cloudCfg = JSON.parse(raw); }catch(e){ cloudCfg={apiKey:"",binId:"alandiyah-shomoos"}; } }
 }
 function saveCloudCfgLocal(){ safeLocalSet(LOCAL_CFG_KEY, JSON.stringify(cloudCfg)); }
 function isCloudConfigured(){ return !!(cloudCfg.apiKey && cloudCfg.binId); }
@@ -1160,6 +1181,18 @@ function setupRoleGate(){
     document.getElementById('consentGate').style.display = 'none';
     renderAppForUser();
   });
+
+  const savedUsername = safeLocalGet(ROLE_CFG_KEY);
+  if(savedUsername){
+    const u = state.users.find(x=>x.username===savedUsername && x.active!==false);
+    if(u){
+      currentUser=u;
+      currentRole=u.role;
+      document.getElementById('roleGate').style.display='none';
+      document.getElementById('consentGate').style.display='none';
+      renderAppForUser(true);
+    }
+  }
 }
 let __pendingLoginUser = null;
 function renderUserPickList(){
@@ -1200,7 +1233,7 @@ function authenticateUser(user){
   document.getElementById('consentContinueBtn').disabled = true;
   document.getElementById('consentGate').style.display = 'flex';
 }
-function renderAppForUser(){
+function renderAppForUser(silent){
   applyRoleClass();
   document.getElementById('app').style.display = 'flex';
   document.getElementById('roleIndicatorText').textContent = `${currentUser.name} — ${roleLabel(currentRole)}`;
@@ -1213,8 +1246,10 @@ function renderAppForUser(){
   startAutoSync();
   startReminderEngine();
   updateBell();
-  logAction('تسجيل دخول', 'user', currentUser.name, '');
-  toast(`مرحباً ${currentUser.name}`, roleIcon(currentRole));
+  if(!silent){
+    logAction('تسجيل دخول', 'user', currentUser.name, '');
+    toast(`مرحباً ${currentUser.name}`, roleIcon(currentRole));
+  }
 }
 function switchRole(){
   currentUser = null; currentRole = null;
@@ -1269,76 +1304,163 @@ async function safeErrText(res){
 }
 
 /* ---------------------------- CLOUD SYNC (Supabase) ---------------------------- */
+const SHOMOOS_PROJECT_URL = 'https://jpoijjlgrfsctritfpbrp.supabase.co';
+const SHOMOOS_WORKSPACE_ID = 'alandiyah-shomoos';
+let shomoosSupabase = null;
+let shomoosChannel = null;
+let lastRemoteRevision = 0;
+const SHOMOOS_CLIENT_KEY = 'srco_shomoos_client_id_v1';
+const shomoosClientId = safeLocalGet(SHOMOOS_CLIENT_KEY) || ('sh-'+Date.now()+'-'+Math.random().toString(36).slice(2));
+safeLocalSet(SHOMOOS_CLIENT_KEY, shomoosClientId);
+
 function setSyncStatus(kind, text){
   const box = document.getElementById('syncStatusBox');
   if(!box) return;
   box.className = 'sync-status ' + kind;
-  document.getElementById('syncStatusText').textContent = text;
+  const textEl = document.getElementById('syncStatusText');
+  if(textEl) textEl.textContent = text;
 }
+
+function getShomoosClient(){
+  if(!window.supabase) throw new Error('مكتبة Supabase لم يتم تحميلها');
+  if(!shomoosSupabase){
+    shomoosSupabase = window.supabase.createClient(
+      SHOMOOS_PROJECT_URL,
+      cloudCfg.apiKey,
+      { auth:{ persistSession:false, autoRefreshToken:false } }
+    );
+  }
+  return shomoosSupabase;
+}
+
+function isCloudConfigured(){
+  return !!(cloudCfg.apiKey && (cloudCfg.binId || SHOMOOS_WORKSPACE_ID));
+}
+
+function fillSyncModalFields(){
+  document.getElementById('cfgApiKey').value = cloudCfg.apiKey || '';
+  document.getElementById('cfgBinId').value = cloudCfg.binId || SHOMOOS_WORKSPACE_ID;
+  const hint = document.getElementById('cfgHint');
+  if(hint) hint.textContent = isCloudConfigured()
+    ? 'مزامنة Supabase مفعلة على هذا الجهاز.'
+    : 'ألصق Publishable Key المستخدم في بقية الأنظمة.';
+}
+
 async function cloudPull(silent){
   if(!isCloudConfigured()) return null;
   try{
-    const res = await fetch(`https://api.Supabase/v3/b/${cloudCfg.binId}/latest`, { headers:{ 'Publishable Key': cloudCfg.apiKey } });
-    if(!res.ok){ const errTxt = await safeErrText(res); throw new Error(errTxt); }
-    const json = await res.json();
-    return await parseSyncPayload(json.record);
-  }catch(e){ if(!silent) toast('تعذر جلب أحدث نسخة من السحابة: '+e.message, '⚠'); return null; }
+    const { data, error } = await getShomoosClient()
+      .from('app_state')
+      .select('payload,revision,client_id,updated_by')
+      .eq('workspace_id', cloudCfg.binId || SHOMOOS_WORKSPACE_ID)
+      .maybeSingle();
+
+    if(error) throw error;
+    if(!data || !data.payload) return null;
+    lastRemoteRevision = Number(data.revision || 0);
+    return data.payload;
+  }catch(e){
+    if(!silent) toast('تعذر جلب أحدث نسخة من Supabase: '+(e.message||e), '⚠');
+    return null;
+  }
 }
+
 async function cloudPush(){
   if(!isCloudConfigured()) return { ok:false, error:'لم تُفعّل المزامنة' };
   try{
-    const body = await buildSyncPayload();
-    const res = await fetch(`https://api.Supabase/v3/b/${cloudCfg.binId}`, {
-      method:'PUT', headers:{ 'Content-Type':'application/json', 'Publishable Key':cloudCfg.apiKey }, body
-    });
-    if(!res.ok){ const errTxt = await safeErrText(res); console.error('cloudPush error:', errTxt); return { ok:false, error:errTxt }; }
+    const revision = Date.now();
+    const { error } = await getShomoosClient()
+      .from('app_state')
+      .upsert({
+        workspace_id: cloudCfg.binId || SHOMOOS_WORKSPACE_ID,
+        payload: state,
+        revision,
+        client_id: shomoosClientId,
+        updated_by: currentUser ? currentUser.name : 'جهاز غير معروف',
+        updated_at: new Date().toISOString()
+      }, { onConflict:'workspace_id' });
+
+    if(error) throw error;
+    lastRemoteRevision = revision;
     return { ok:true, error:null };
-  }catch(e){ console.error('cloudPush exception:', e); return { ok:false, error:e.message||'خطأ غير معروف' }; }
+  }catch(e){
+    return { ok:false, error:e.message || 'خطأ غير معروف' };
+  }
 }
+
 async function createNewBin(){
   const key = document.getElementById('cfgApiKey').value.trim();
   if(!key){ toast('الرجاء إدخال Publishable Key أولاً', '⚠'); return; }
-  cloudCfg.apiKey = key;
-  setSyncStatus('syncing', 'جارٍ إنشاء مساحة التخزين…');
-  try{
-    const body = await buildSyncPayload();
-    const res = await fetch('https://api.Supabase/v3/b', {
-      method:'POST', headers:{ 'Content-Type':'application/json', 'Publishable Key':key, 'X-Bin-Name':'srco-shomoos-tracker' }, body
-    });
-    if(!res.ok){ const errTxt = await safeErrText(res); throw new Error(errTxt); }
-    const json = await res.json();
-    const binId = json.metadata.id;
-    document.getElementById('cfgBinId').value = binId;
-    cloudCfg.binId = binId;
-    saveCloudCfgLocal();
+
+  cloudCfg = {
+    apiKey: key,
+    binId: document.getElementById('cfgBinId').value.trim() || SHOMOOS_WORKSPACE_ID
+  };
+  saveCloudCfgLocal();
+  shomoosSupabase = null;
+
+  setSyncStatus('syncing', 'جارٍ تهيئة مساحة شموس على Supabase…');
+  const result = await cloudPush();
+
+  if(result.ok){
     setSyncStatus('ok', 'متصل ومتزامن مع كل الأجهزة');
-    toast('تم إنشاء مساحة التخزين (مضغوطة تلقائياً) — انسخ المعرّف والصقه في باقي الأجهزة', '☁');
-  }catch(e){
-    setSyncStatus('err', 'تعذر إنشاء مساحة التخزين');
-    toast('فشل الإنشاء: '+e.message, '⚠');
+    toast('تم تهيئة مساحة شموس على Supabase', '☁');
+    startRealtimeSync();
+  }else{
+    setSyncStatus('err', 'تعذر تهيئة مساحة شموس');
+    toast('فشل التهيئة: '+result.error, '⚠');
   }
 }
-function fillSyncModalFields(){
-  document.getElementById('cfgApiKey').value = cloudCfg.apiKey || '';
-  document.getElementById('cfgBinId').value = cloudCfg.binId || '';
-  document.getElementById('cfgHint').textContent = isCloudConfigured()
-    ? 'المزامنة مفعّلة على هذا الجهاز. الصق نفس المفتاح والمعرّف في باقي أجهزة الفريق لربطها.'
-    : 'لا يوجد إعداد محفوظ على هذا الجهاز بعد.';
-  if(!isCloudConfigured()) setSyncStatus('off', 'وضع محلي فقط — فعّل المزامنة لتنتقل التحديثات بين الأجهزة');
+
+function startRealtimeSync(){
+  if(!isCloudConfigured()) return;
+  try{
+    const client = getShomoosClient();
+    if(shomoosChannel){
+      try{ client.removeChannel(shomoosChannel); }catch(e){}
+    }
+    shomoosChannel = client
+      .channel('alandiyah-shomoos-realtime')
+      .on('postgres_changes', {
+        event:'*',
+        schema:'public',
+        table:'app_state',
+        filter:'workspace_id=eq.'+(cloudCfg.binId || SHOMOOS_WORKSPACE_ID)
+      }, payload=>{
+        const row = payload.new || {};
+        if(!row.payload) return;
+        if(row.client_id === shomoosClientId) return;
+        if(Number(row.revision || 0) <= lastRemoteRevision) return;
+
+        lastRemoteRevision = Number(row.revision || 0);
+        state = row.payload;
+        safeLocalSet(LOCAL_CACHE_KEY, JSON.stringify(state));
+        renderNavCounts();
+        renderView(currentView);
+        updateBell();
+        toast('وصل تحديث شموس من '+(row.updated_by || 'جهاز آخر'), '☁');
+      })
+      .subscribe();
+  }catch(e){
+    console.error('Realtime subscription error', e);
+  }
 }
+
 function startAutoSync(){
   clearInterval(autoSyncTimer);
-  autoSyncTimer = setInterval(async ()=>{
-    if(!isCloudConfigured() || cloudBusy || document.visibilityState!=='visible') return;
-    if(document.querySelectorAll('.overlay.show').length) return;
+  if(!isCloudConfigured()) return;
+  startRealtimeSync();
+  autoSyncTimer = setInterval(async()=>{
+    if(cloudBusy || document.visibilityState !== 'visible') return;
     const cloud = await cloudPull(true);
-    if(cloud && JSON.stringify(cloud)!==JSON.stringify(state)){
+    if(cloud && JSON.stringify(cloud) !== JSON.stringify(state)){
       state = cloud;
       safeLocalSet(LOCAL_CACHE_KEY, JSON.stringify(state));
-      renderNavCounts(); renderView(currentView); updateBell();
-      toast('تم تحديث البيانات من جهاز آخر', '☁');
+      renderNavCounts();
+      renderView(currentView);
+      updateBell();
     }
-  }, 25000);
+  }, 30000);
 }
 
 /* ---------------------------- PERSISTENCE ---------------------------- */
@@ -2006,7 +2128,7 @@ function bindGlobalEvents(){
     if(state.settings.browserNotif && 'Notification' in window && Notification.permission!=='granted') Notification.requestPermission();
     await persist();
     closeModal('modalSettings');
-    toast('تم حفظ الإعدادات', '✓');
+    toast('تم حفظ إعدادات المزامنة', '✓');
   });
   document.getElementById('testNotifyBtn').addEventListener('click', ()=>{
     fireNotification('🔔 تجربة تنبيه', 'هذا مثال على شكل التنبيه الذي سيصلك عند وجود تحديث مطلوب في شموس.');
@@ -2019,8 +2141,9 @@ function bindGlobalEvents(){
     const key = document.getElementById('cfgApiKey').value.trim();
     const bin = document.getElementById('cfgBinId').value.trim();
     if(!key || !bin){ toast('الرجاء إدخال المفتاح والمعرّف معاً', '⚠'); return; }
-    cloudCfg = { apiKey:key, binId:bin };
+    cloudCfg = { apiKey:key, binId:bin || SHOMOOS_WORKSPACE_ID };
     saveCloudCfgLocal();
+    shomoosSupabase = null;
     setSyncStatus('syncing', 'جارٍ التحقق من الاتصال…');
     const cloud = await cloudPull(true);
     if(cloud){
@@ -2038,6 +2161,7 @@ function bindGlobalEvents(){
       setSyncStatus(r.ok?'ok':'err', r.ok?'متصل ومتزامن مع كل الأجهزة':'تعذر الاتصال: '+r.error);
       toast(r.ok?'تم تفعيل المزامنة بنجاح':'فشل الاتصال: '+r.error, r.ok?'☁':'⚠');
     }
+    startRealtimeSync();
     closeModal('modalSync');
   });
   document.getElementById('syncNowBtn').addEventListener('click', async ()=>{
@@ -2130,59 +2254,96 @@ init();
 })();
 </script>
 
-<script id="v7-shomoos-supabase-adapter">
+
+
+
+<script id="v8-shared-control">
 (()=>{
- const PROJECT_URL='https://jpoijjlgrfsctritfpbrp.supabase.co';
- const CFG='srco-shomoos-supabase-v1',CLIENT='srco-shomoos-client-v1';
- let scfg=JSON.parse(localStorage.getItem(CFG)||'null')||{projectUrl:PROJECT_URL,anonKey:'',workspaceId:'alandiyah-shomoos'};
- let sb=null,ch=null,remoteRevision=0;
- const cid=localStorage.getItem(CLIENT)||(()=>{const x='sh-'+Date.now()+'-'+Math.random().toString(36).slice(2);localStorage.setItem(CLIENT,x);return x})();
- window.isCloudConfigured=()=>!!(scfg.projectUrl&&scfg.anonKey&&scfg.workspaceId);
- function client(){if(!sb&&window.supabase)sb=window.supabase.createClient(scfg.projectUrl,scfg.anonKey,{auth:{persistSession:false}});return sb}
- window.cloudPull=async silent=>{
-  if(!isCloudConfigured())return null;
-  try{const {data,error}=await client().from('app_state').select('*').eq('workspace_id',scfg.workspaceId).maybeSingle();if(error)throw error;if(!data||!data.payload)return null;remoteRevision=Number(data.revision||0);return data.payload}catch(e){if(!silent)toast('تعذر جلب بيانات شموس من Supabase','⚠');return null}
- };
- window.cloudPush=async()=>{
-  if(!isCloudConfigured())return {ok:false,error:'لم يتم الربط'};
-  try{const rev=Date.now();const {error}=await client().from('app_state').upsert({workspace_id:scfg.workspaceId,payload:state,revision:rev,client_id:cid,updated_by:currentUser?currentUser.name:'جهاز غير معروف',updated_at:new Date().toISOString()},{onConflict:'workspace_id'});if(error)throw error;remoteRevision=rev;return {ok:true}}catch(e){return {ok:false,error:e.message||e}}
- };
- window.createNewBin=async()=>{
-  scfg.anonKey=document.getElementById('cfgApiKey').value.trim();
-  scfg.workspaceId=document.getElementById('cfgBinId').value.trim()||'alandiyah-shomoos';
-  if(!scfg.anonKey)return toast('ألصق Publishable Key أولاً','⚠');
-  localStorage.setItem(CFG,JSON.stringify(scfg));sb=null;
-  const r=await cloudPush();toast(r.ok?'تم تهيئة مساحة شموس على Supabase':'تعذر التهيئة: '+r.error,r.ok?'☁':'⚠');
-  if(r.ok)subscribeShomoos();
- };
- window.fillSyncModalFields=()=>{
-  document.getElementById('cfgApiKey').value=scfg.anonKey||'';
-  document.getElementById('cfgBinId').value=scfg.workspaceId||'alandiyah-shomoos';
-  document.getElementById('cfgHint').textContent=isCloudConfigured()?'مزامنة Supabase مفعلة على هذا الجهاز.':'ألصق Publishable Key المستخدم في بقية الأنظمة.';
- };
- function subscribeShomoos(){
-  if(!isCloudConfigured())return;if(ch)try{client().removeChannel(ch)}catch(e){}
-  ch=client().channel('alandiyah-shomoos-v7').on('postgres_changes',{event:'*',schema:'public',table:'app_state',filter:'workspace_id=eq.'+scfg.workspaceId},p=>{
-   const r=p.new;if(!r||r.client_id===cid||Number(r.revision||0)<=remoteRevision)return;
-   remoteRevision=Number(r.revision||0);state=r.payload;safeLocalSet(LOCAL_CACHE_KEY,JSON.stringify(state));
-   renderNavCounts();renderView(currentView);updateBell();toast('وصل تحديث شموس من '+(r.updated_by||'جهاز آخر'),'☁');
-  }).subscribe();
+ const APP_ROOT='../../index.html';
+ const LAST_USER_KEY='scc_last_user_v8';
+
+ function addControls(){
+   if(!document.querySelector('.v8-home-btn')){
+     const h=document.createElement('button');h.className='v8-home-btn';h.title='العودة للصفحة الرئيسية';h.textContent='⌂';
+     h.onclick=()=>location.href=APP_ROOT;document.body.appendChild(h);
+   }
+   if(!document.querySelector('.v8-sync-btn')){
+     const s=document.createElement('button');s.className='v8-sync-btn';s.title='تحديث المزامنة للجميع';s.setAttribute('aria-label','تحديث المزامنة للجميع');s.textContent='↻';
+     s.onclick=async()=>{
+       s.classList.add('syncing');
+       try{
+         if(typeof window.v8RefreshCloud==='function') await window.v8RefreshCloud();
+         else if(typeof cloudPull==='function'){
+           const cloud=await cloudPull(false);
+           if(cloud){
+             if(typeof applyCloudState==='function') applyCloudState(cloud,Date.now(),'');
+             else {
+               window.state=cloud;
+               try{safeLocalSet(LOCAL_CACHE_KEY,JSON.stringify(state))}catch(e){}
+               try{renderNavCounts();renderView(currentView);updateBell()}catch(e){}
+             }
+           }
+         } else alert('المزامنة غير مفعلة على هذا الجهاز.');
+       }catch(e){alert('تعذر تحديث المزامنة: '+(e.message||e))}
+       finally{setTimeout(()=>s.classList.remove('syncing'),450)}
+     };
+     document.body.appendChild(s);
+   }
+   const name=(window.currentUser&&currentUser.name)||localStorage.getItem(LAST_USER_KEY)||'';
+   if(name&&!document.querySelector('.v8-user-chip')){
+     const c=document.createElement('div');c.className='v8-user-chip';c.textContent='مرحباً، '+name;document.body.appendChild(c);
+   }
  }
- document.addEventListener('DOMContentLoaded',()=>{
-  const save=document.getElementById('saveSyncBtn');
-  if(save)save.onclick=async()=>{
-   scfg.anonKey=document.getElementById('cfgApiKey').value.trim();
-   scfg.workspaceId=document.getElementById('cfgBinId').value.trim()||'alandiyah-shomoos';
-   localStorage.setItem(CFG,JSON.stringify(scfg));sb=null;
-   const cloud=await cloudPull(true);
-   if(cloud&&confirm('تم العثور على بيانات شموس في Supabase. هل تريد استخدام النسخة السحابية؟')){state=cloud;safeLocalSet(LOCAL_CACHE_KEY,JSON.stringify(state));renderNavCounts();renderView(currentView)}
-   else await cloudPush();
-   subscribeShomoos();closeModal('modalSync');toast('تم ربط شموس مع Supabase','☁');
-  };
-  const disc=document.getElementById('disconnectSyncBtn');if(disc)disc.onclick=()=>{localStorage.removeItem(CFG);scfg={projectUrl:PROJECT_URL,anonKey:'',workspaceId:'alandiyah-shomoos'};sb=null;toast('تم فصل مزامنة شموس على هذا الجهاز','↺');closeModal('modalSync')};
-  if(isCloudConfigured())subscribeShomoos();
+
+ // حفظ المستخدم الحالي تلقائياً لاستعادته عند الزيارة التالية.
+ window.addEventListener('load',()=>{
+   try{
+     if(window.currentUser&&currentUser.name)localStorage.setItem(LAST_USER_KEY,currentUser.name);
+   }catch(e){}
+   addControls();
  });
+ new MutationObserver(addControls).observe(document.documentElement,{childList:true,subtree:true});
+
+ // تجاوز شاشة اختيار المستخدم إذا سبق اختيار مستخدم صالح.
+ function autoEnterLastUser(){
+   const saved=localStorage.getItem(LAST_USER_KEY);
+   if(!saved)return;
+   try{
+     const users=(window.state&&Array.isArray(state.users))?state.users:
+       (window.users&&Array.isArray(users)?users:[]);
+     const u=users.find(x=>x.name===saved || x.username===saved);
+     if(!u)return;
+     window.currentUser=u;
+     // إخفاء أشهر شاشات اختيار المستخدم المستخدمة في الأنظمة.
+     ['userPicker','loginOverlay','usersOverlay','userSelectOverlay','loginScreen'].forEach(id=>{
+       const el=document.getElementById(id);if(el){el.hidden=true;el.style.display='none'}
+     });
+     document.querySelectorAll('.overlay.show,.modal.show').forEach(el=>{
+       if(/مستخدم|دخول|اختيار/i.test(el.textContent||'')){el.classList.remove('show');el.style.display='none'}
+     });
+     if(typeof renderNavCounts==='function')renderNavCounts();
+     if(typeof renderView==='function'&&window.currentView)renderView(currentView);
+   }catch(e){}
+ }
+ setTimeout(autoEnterLastUser,250);
+ setTimeout(autoEnterLastUser,900);
 })();
+</script>
+
+
+<script id="v8-shomoos-refresh">
+window.v8RefreshCloud=async function(){
+  if(typeof isCloudConfigured!=='function'||!isCloudConfigured()){
+    throw new Error('يرجى تفعيل Supabase من إعدادات المزامنة أولاً');
+  }
+  const cloud=await cloudPull(false);
+  if(!cloud)throw new Error('لم تصل بيانات من Supabase');
+  state=cloud;
+  try{safeLocalSet(LOCAL_CACHE_KEY,JSON.stringify(state))}catch(e){}
+  try{renderNavCounts();renderView(currentView);updateBell()}catch(e){}
+  if(typeof toast==='function')toast('تم تحديث بيانات شموس بنجاح','☁');
+  return true;
+};
 </script>
 
 </body>

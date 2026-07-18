@@ -583,6 +583,27 @@ tbody tr:last-child td{ border-bottom:none;}
 .v4-date-helper small{display:block;color:var(--text-muted);font-size:10px}
 .v4-days{font-weight:800;margin-inline-start:6px}
 .v4-days.ok{color:var(--green)}.v4-days.warn{color:var(--gold)}.v4-days.danger{color:var(--red)}
+
+/* ===== الإصدار 8.0 — تنقل ودخول ومزامنة موحدة ===== */
+.v8-home-btn,.v8-sync-btn{
+ position:fixed;z-index:9800;bottom:18px;width:48px;height:48px;border-radius:50%;
+ display:grid;place-items:center;border:1px solid rgba(255,255,255,.18);
+ background:rgba(7,18,29,.92);color:#fff;box-shadow:0 14px 35px rgba(0,0,0,.35);
+ cursor:pointer;font-size:20px;backdrop-filter:blur(12px)
+}
+.v8-home-btn{left:18px}.v8-sync-btn{left:76px}
+.v8-sync-btn.syncing{animation:v8spin 1s linear infinite}
+@keyframes v8spin{to{transform:rotate(360deg)}}
+.v8-user-chip{
+ position:fixed;z-index:9700;top:14px;left:14px;padding:8px 12px;border-radius:999px;
+ border:1px solid rgba(255,255,255,.14);background:rgba(7,18,29,.82);color:#fff;
+ font-size:10px;backdrop-filter:blur(12px)
+}
+@media(max-width:650px){
+ .v8-home-btn,.v8-sync-btn{bottom:12px;width:44px;height:44px}
+ .v8-home-btn{left:12px}.v8-sync-btn{left:64px}.v8-user-chip{top:8px;left:8px}
+}
+
 </style>
 </head>
 <body>
@@ -1902,13 +1923,13 @@ function renderLoginUsers(){
     else enterUser(u);
   });
 }
-function enterUser(u){
+function enterUser(u,silent){
   currentUser=u;pendingLoginUser=null;safeLocalSet(ROLE_CFG_KEY,u.username);
   document.getElementById('roleGate').style.display='none';
   document.getElementById('app').style.display='flex';
   document.getElementById('currentUserText').textContent=u.name+' — '+(u.role==='admin'?'مدير':'موظف');
   document.getElementById('usersManageBtn').style.display=isAdmin()?'flex':'none';
-  applyPermissionsUI();toast('مرحباً '+u.name,u.role==='admin'?'👑':'👤');
+  applyPermissionsUI();if(!silent)toast('مرحباً '+u.name,u.role==='admin'?'👑':'👤');
 }
 function switchUser(){
   currentUser=null;safeLocalRemove(ROLE_CFG_KEY);document.getElementById('app').style.display='none';
@@ -1937,7 +1958,7 @@ function initAuthLayer(){
   document.getElementById('usrRole').onchange=()=>document.getElementById('permissionFields').style.display=document.getElementById('usrRole').value==='admin'?'none':'block';
   document.addEventListener('click',permissionCapture,true);
   const saved=safeLocalGet(ROLE_CFG_KEY);const u=state.users.find(x=>x.username===saved);
-  if(u)enterUser(u);else switchUser();
+  if(u)enterUser(u,true);else switchUser();
   persist(true);
 }
 function permissionCapture(e){
@@ -2088,5 +2109,98 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
  b.onclick=()=>{const user=(window.currentUser&&currentUser.username)||(window.currentUser&&currentUser.name)||'default';const p=prompt('أدخل الرقم السري الجديد (4 إلى 8 أرقام):');if(!p)return;if(!/^\d{4,8}$/.test(p))return alert('الرقم يجب أن يكون من 4 إلى 8 أرقام');const map=JSON.parse(localStorage.getItem('v42-user-pins')||'{}');map[user]=p;localStorage.setItem('v42-user-pins',JSON.stringify(map));alert('تم تحديث الرقم السري لهذا المستخدم')};document.body.appendChild(b);
 })();
 </script>
+
+<script id="v8-shared-control">
+(()=>{
+ const APP_ROOT='../../index.html';
+ const LAST_USER_KEY='scc_last_user_v8';
+
+ function addControls(){
+   if(!document.querySelector('.v8-home-btn')){
+     const h=document.createElement('button');h.className='v8-home-btn';h.title='العودة للصفحة الرئيسية';h.textContent='⌂';
+     h.onclick=()=>location.href=APP_ROOT;document.body.appendChild(h);
+   }
+   if(!document.querySelector('.v8-sync-btn')){
+     const s=document.createElement('button');s.className='v8-sync-btn';s.title='تحديث المزامنة';s.textContent='↻';
+     s.onclick=async()=>{
+       s.classList.add('syncing');
+       try{
+         if(typeof window.v8RefreshCloud==='function') await window.v8RefreshCloud();
+         else if(typeof cloudPull==='function'){
+           const cloud=await cloudPull(false);
+           if(cloud){
+             if(typeof applyCloudState==='function') applyCloudState(cloud,Date.now(),'');
+             else {
+               window.state=cloud;
+               try{safeLocalSet(LOCAL_CACHE_KEY,JSON.stringify(state))}catch(e){}
+               try{renderNavCounts();renderView(currentView);updateBell()}catch(e){}
+             }
+           }
+         } else alert('المزامنة غير مفعلة على هذا الجهاز.');
+       }catch(e){alert('تعذر تحديث المزامنة: '+(e.message||e))}
+       finally{setTimeout(()=>s.classList.remove('syncing'),450)}
+     };
+     document.body.appendChild(s);
+   }
+   const name=(window.currentUser&&currentUser.name)||localStorage.getItem(LAST_USER_KEY)||'';
+   if(name&&!document.querySelector('.v8-user-chip')){
+     const c=document.createElement('div');c.className='v8-user-chip';c.textContent='مرحباً، '+name;document.body.appendChild(c);
+   }
+ }
+
+ // حفظ المستخدم الحالي تلقائياً لاستعادته عند الزيارة التالية.
+ window.addEventListener('load',()=>{
+   try{
+     if(window.currentUser&&currentUser.name)localStorage.setItem(LAST_USER_KEY,currentUser.name);
+   }catch(e){}
+   addControls();
+ });
+ new MutationObserver(addControls).observe(document.documentElement,{childList:true,subtree:true});
+
+ // تجاوز شاشة اختيار المستخدم إذا سبق اختيار مستخدم صالح.
+ function autoEnterLastUser(){
+   const saved=localStorage.getItem(LAST_USER_KEY);
+   if(!saved)return;
+   try{
+     const users=(window.state&&Array.isArray(state.users))?state.users:
+       (window.users&&Array.isArray(users)?users:[]);
+     const u=users.find(x=>x.name===saved || x.username===saved);
+     if(!u)return;
+     window.currentUser=u;
+     // إخفاء أشهر شاشات اختيار المستخدم المستخدمة في الأنظمة.
+     ['userPicker','loginOverlay','usersOverlay','userSelectOverlay','loginScreen'].forEach(id=>{
+       const el=document.getElementById(id);if(el){el.hidden=true;el.style.display='none'}
+     });
+     document.querySelectorAll('.overlay.show,.modal.show').forEach(el=>{
+       if(/مستخدم|دخول|اختيار/i.test(el.textContent||'')){el.classList.remove('show');el.style.display='none'}
+     });
+     if(typeof renderNavCounts==='function')renderNavCounts();
+     if(typeof renderView==='function'&&window.currentView)renderView(currentView);
+   }catch(e){}
+ }
+ setTimeout(autoEnterLastUser,250);
+ setTimeout(autoEnterLastUser,900);
+})();
+</script>
+
+
+<script id="v8-cloud-refresh">
+window.v8RefreshCloud=async function(){
+  if(typeof isCloudConfigured!=='function'||!isCloudConfigured())
+    throw new Error('المزامنة غير مفعلة على هذا الجهاز');
+  const cloud=await cloudPull(false);
+  if(!cloud)throw new Error('تعذر جلب النسخة السحابية');
+  if(typeof applyCloudState==='function'){
+    applyCloudState(cloud,Date.now(),'');
+  }else{
+    window.state=cloud;
+    try{safeLocalSet(LOCAL_CACHE_KEY,JSON.stringify(state))}catch(e){}
+    try{renderNavCounts();renderView(currentView);updateBell()}catch(e){}
+  }
+  if(typeof toast==='function')toast('تم تحديث المزامنة بنجاح','☁');
+  return true;
+};
+</script>
+
 </body>
 </html>
