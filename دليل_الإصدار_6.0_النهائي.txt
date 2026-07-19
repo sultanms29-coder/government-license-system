@@ -1,0 +1,30 @@
+منصة العلاقات العامة والحكومية — الإصدار 6.0
+
+الوضع الحالي:
+- مشروع Supabase الحالي محفوظ ولم يتم حذف أي بيانات.
+- مساحات العمل الست موجودة:
+  alandiyah-licenses
+  alandiyah-projects
+  alandiyah-contracts
+  alandiyah-cases
+  alandiyah-home
+  alandiyah-shomoos
+
+رابط المشروع مثبت داخل المنصة:
+https://jpoijjlgrfsctritfpbrp.supabase.co
+
+الخطوة الوحيدة المتبقية:
+1. من Supabase افتح Settings ثم API Keys.
+2. انسخ Publishable Key فقط.
+3. افتح المنصة.
+4. اضغط الإعدادات أعلى الصفحة.
+5. اختر «إعداد الربط».
+6. الصق Publishable Key.
+7. اضغط «حفظ واختبار الاتصال».
+8. أضف خبرًا تجريبيًا، ثم افتح المنصة من جهاز آخر وتأكد من ظهوره.
+
+مهم:
+- لا تستخدم Secret Key.
+- لا تحذف جدول app_state.
+- لا تنشئ مشروع Supabase جديدًا.
+- بعد نجاح الاختبار، ارفع جميع محتويات هذا الإصدار إلى GitHub.
