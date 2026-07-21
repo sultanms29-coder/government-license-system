@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>الفرص والمشروعات الحكومية</title>
+<style>
+:root{--bg:#07111f;--card:#0d1b2b;--text:#f6f7fb;--muted:#a8b3c2;--gold:#d7b15a;--line:rgba(255,255,255,.12);--green:#46d38a;--red:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#06101d,#0b1c2f);color:var(--text);font-family:Tahoma,Arial,sans-serif;min-height:100vh}
+header{position:sticky;top:0;z-index:20;background:rgba(7,17,31,.91);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:15px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+h1{font-size:19px;margin:0}.back{color:var(--text);text-decoration:none;border:1px solid var(--line);padding:9px 12px;border-radius:11px}
+main{max-width:1250px;margin:auto;padding:22px}.hero{border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:22px;padding:20px;margin-bottom:17px}
+.hero p{color:var(--muted);line-height:1.8}.status{display:flex;gap:8px;flex-wrap:wrap;font-size:11px}.pill{padding:7px 10px;border-radius:99px;border:1px solid var(--line);background:rgba(255,255,255,.04)}
+.tools{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0}.tools input,.tools select{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px;min-width:180px;flex:1}
+.tabs{display:flex;gap:8px;margin-bottom:15px}.tab{border:1px solid var(--line);background:var(--card);color:var(--text);padding:10px 15px;border-radius:12px;cursor:pointer}.tab.active{background:var(--gold);color:#101010}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{border:1px solid var(--line);background:rgba(13,27,43,.92);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}.image{height:155px;background:linear-gradient(135deg,#19324e,#0d1b2b);display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:bold;background-size:cover;background-position:center}.content{padding:15px;display:flex;flex-direction:column;gap:9px;flex:1}.source{font-size:10px;color:var(--gold)}.title{font-size:14px;line-height:1.7;margin:0}.summary{color:var(--muted);font-size:11px;line-height:1.7;max-height:90px;overflow:hidden}.keywords{display:flex;gap:5px;flex-wrap:wrap}.keyword{font-size:9px;padding:4px 7px;border:1px solid var(--line);border-radius:99px}.actions{margin-top:auto;display:flex;gap:7px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:9px 11px;text-decoration:none;font-weight:bold;font-size:10px;cursor:pointer;background:var(--gold);color:#111}.btn.alt{background:transparent;color:var(--text);border:1px solid var(--line)}.empty{grid-column:1/-1;text-align:center;padding:50px;border:1px dashed var(--line);border-radius:18px;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:10px;padding:25px}
+@media(max-width:950px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:620px){.grid{grid-template-columns:1fr}main{padding:13px}header{padding:12px}}
+</style>
+
+<style id="v90-field-input-safety">
+/* v9.0 — native mobile input behavior; no global touch/click interception */
+input, textarea, select, [contenteditable="true"], [role="textbox"]{
+  pointer-events:auto!important;
+  -webkit-user-select:text!important;
+  user-select:text!important;
+  touch-action:manipulation;
+}
+textarea{resize:vertical;}
+</style>
+
+
+<style id="v11-ultimate-ux-style">
+:root{--v11-gold:#d4af37;--v11-ink:#111820;--v11-ease:cubic-bezier(.22,1,.36,1)}
+html{scroll-behavior:auto!important;overscroll-behavior-y:none}
+body{touch-action:pan-y;scrollbar-gutter:stable;overflow-anchor:none}
+button,a,[role="button"],.nav-item,.card,.pcard,.branch-card,.case-row,.portal-card{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button,a,[role="button"],input,textarea,select{min-height:44px}
+.field,.form-group,.input-group,.portal-field,.control-group{position:relative;cursor:text}
+.field input,.field textarea,.field select,.form-group input,.form-group textarea,.form-group select,.input-group input,.input-group textarea,.input-group select,.portal-field input,.portal-field textarea,.portal-field select{position:relative;z-index:2;width:100%;pointer-events:auto!important;touch-action:manipulation}
+.field label,.form-group label,.portal-field label{cursor:text;user-select:none}
+.v11-focus-shell{outline:2px solid rgba(212,175,55,.55)!important;outline-offset:2px;box-shadow:0 0 0 5px rgba(212,175,55,.10)!important}
+.overlay,.portal-modal,[class*="modal-overlay"],dialog{contain:layout paint;will-change:opacity}
+.modal,.portal-modal-card,.dialog,.popup,[role="dialog"]{contain:layout style;will-change:transform}
+.v11-closing{opacity:0!important;transform:translateY(10px) scale(.985)!important;pointer-events:none!important;transition:opacity .14s ease,transform .14s ease!important}
+.portal-home-btn,.v8-home-btn{position:fixed!important;left:max(18px,env(safe-area-inset-left))!important;right:auto!important;top:max(16px,env(safe-area-inset-top))!important;bottom:auto!important;width:auto!important;min-width:58px!important;height:50px!important;padding:0 16px!important;border-radius:16px!important;z-index:990!important;background:linear-gradient(135deg,#ebcb6b,#d4af37)!important;color:#171204!important;border:1px solid rgba(255,255,255,.25)!important;box-shadow:0 10px 28px rgba(0,0,0,.32)!important;font-weight:900!important;font-size:0!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important}
+.portal-home-btn::before,.v8-home-btn::before{content:'⌂';font-size:22px!important}.portal-home-btn::after,.v8-home-btn::after{content:'الرئيسية';font-size:12px!important}
+.v8-sync-btn{left:max(18px,env(safe-area-inset-left))!important;bottom:max(18px,env(safe-area-inset-bottom))!important;width:52px!important;height:52px!important;border-radius:16px!important;box-shadow:0 10px 25px rgba(0,0,0,.28)!important}
+.sync-status,#syncStatusBox,[id*="lastSync" i],[class*="last-update" i],.motivation-flash,.dhikr-toast{font-weight:800!important;letter-spacing:.05px}
+.sync-status,#syncStatusBox{border-width:1.5px!important;padding:11px 13px!important}
+.motivation-flash{font-size:15px!important;line-height:1.7!important;border-radius:18px!important;box-shadow:0 16px 42px rgba(0,0,0,.38)!important}
+.v11-nav-shade{position:fixed;inset:0;background:rgba(5,8,11,.58);backdrop-filter:blur(2px);z-index:35;opacity:0;pointer-events:none;transition:opacity .18s ease}.v11-nav-shade.show{opacity:1;pointer-events:auto}
+.v11-busy{pointer-events:none!important;opacity:.72!important}.v11-busy::after{content:' …';font-weight:900}
+@media(max-width:980px){
+ body{padding-top:0}
+ .view{padding-bottom:calc(82px + env(safe-area-inset-bottom))!important}
+ .modal,.portal-modal-card,[role="dialog"]{max-height:92dvh!important;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+ .modal-body,.portal-modal-body{overscroll-behavior:contain}
+ .portal-home-btn,.v8-home-btn{top:auto!important;bottom:max(16px,env(safe-area-inset-bottom))!important;min-width:54px!important;height:50px!important;padding:0 13px!important}
+ .v8-sync-btn{left:132px!important}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<style id="v12-enterprise-ui">
+:root{--v12-gold:#d7b548;--v12-panel:#151b22;--v12-border:rgba(255,255,255,.13)}
+html{scroll-behavior:smooth}body{overscroll-behavior-y:none}
+/* شريط أدوات موحد وغير متداخل */
+.v12-tool-dock{position:fixed;inset-inline-start:14px;top:76px;z-index:8500;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.v12-tool{pointer-events:auto;width:42px;height:42px;min-width:42px;min-height:42px;border-radius:13px;border:1px solid rgba(255,255,255,.18);background:rgba(18,24,31,.94);color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.28);display:grid;place-items:center;text-decoration:none;font-size:18px;cursor:pointer;backdrop-filter:blur(12px)}
+.v12-tool:hover{transform:translateY(-1px);border-color:var(--v12-gold)}
+.v12-tool[title="الصفحة الرئيسية"]{background:linear-gradient(135deg,#e4c65f,#b89022);color:#151109}
+.portal-home-btn,.v8-home-btn{display:none!important}
+/* لا تسمح لأي نافذة أو قائمة غير نشطة باستقبال النقر */
+.overlay:not(.show),.portal-modal:not(.show),[class*="modal-overlay"]:not(.show),[role="dialog"]:not(.show),dialog:not([open]){pointer-events:none!important;visibility:hidden!important}
+.overlay.show,.portal-modal.show,[class*="modal-overlay"].show,[role="dialog"].show,dialog[open]{pointer-events:auto!important;visibility:visible!important}
+body.v12-modal-open>select,body.v12-modal-open>input[list]{pointer-events:none!important}
+/* مناطق نقر واضحة */
+.field,.form-group,.input-group,.portal-field{position:relative}
+.field input,.field select,.field textarea,.form-group input,.form-group select,.form-group textarea,.input-group input,.input-group select,.input-group textarea,.portal-field input,.portal-field select,.portal-field textarea{min-height:48px!important;border-radius:12px!important}
+/* دخول المستخدمين */
+#roleGate .v12-login-home,[id*="login"] .v12-login-home{position:absolute;top:18px;inset-inline-start:18px}
+/* شموس: الإقرار في المنتصف */
+.v12-center-declaration{max-width:820px!important;margin:22px auto!important;text-align:center!important}
+/* تذييل الإصدار */
+.v12-version-footer{margin:36px auto 14px;padding:10px 14px;text-align:center;font-size:11px;opacity:.7;border-top:1px solid rgba(255,255,255,.08);max-width:900px}
+/* A4 مؤسسي موحد */
+@page{size:A4 portrait;margin:10mm}
+@media print{
+ body{background:#fff!important;color:#111!important;font-family:"Tahoma","Arial",sans-serif!important;font-size:9.5pt!important}
+ .sidebar,.topbar,.header,.nav,.v12-tool-dock,button,.btn,.toast,.modal,.overlay,.portal-modal,[role="dialog"],.no-print{display:none!important}
+ .main,.content,.view,.page,.report-doc{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;box-shadow:none!important;background:#fff!important;color:#111!important;overflow:visible!important}
+ .report-doc{border:0!important}
+ .report-header{text-align:center!important;border-bottom:2px solid #222!important;padding:0 0 8mm!important;margin-bottom:6mm!important}
+ table,.report-table{width:100%!important;border-collapse:collapse!important;table-layout:fixed!important;page-break-inside:auto!important}
+ tr{page-break-inside:avoid!important;page-break-after:auto!important}
+ th,td{border:1px solid #777!important;padding:5px 6px!important;color:#111!important;background:#fff!important;vertical-align:top!important;overflow-wrap:anywhere!important}
+ th{font-weight:800!important;background:#eee!important}
+ thead{display:table-header-group!important}tfoot{display:table-footer-group!important}
+ h1,h2,h3{color:#111!important;page-break-after:avoid!important}
+ a{color:#111!important;text-decoration:none!important}
+ *{text-shadow:none!important;filter:none!important}
+}
+@media(max-width:700px){.v12-tool-dock{top:auto;bottom:max(14px,env(safe-area-inset-bottom));inset-inline-start:12px;flex-direction:row}.v12-tool{width:44px;height:44px}}
+</style>
+
+
+<style id="v17-readable-ui">
+body{font-family:"Tajawal","Segoe UI",Arial,sans-serif!important;letter-spacing:.05px}h1,h2,h3,h4,.title{font-weight:850!important;color:#f7f2e8!important}.muted,.sub,.hint,p{line-height:1.85!important}.panel,.card,.modal-card,.content-card{border-color:#3b4854!important}.nav-item,.btn,input,select,textarea{font-size:14px!important}.v17-brand-logo{width:26px;height:26px;object-fit:contain;background:#fff;border-radius:7px;padding:2px;vertical-align:middle}.v17-entity-logo{width:34px;height:34px;object-fit:contain;background:#fff;border-radius:9px;padding:4px}.v17-branch-logo{width:46px;height:46px;object-fit:contain;background:#fff;border-radius:12px;padding:4px;margin-inline-start:8px}
+</style>
+<script id="v17-current-user-bridge">
+(()=>{const read=()=>{try{return JSON.parse(sessionStorage.getItem('scc-v17-current-user')||localStorage.getItem('scc-v17-remember')||'null')}catch{return null}};const u=read();if(u){localStorage.setItem('v4-last-user',u.name);localStorage.setItem('scc-current-user-name',u.name);window.SCC_CURRENT_USER=u}document.addEventListener('DOMContentLoaded',()=>{if(!u)return;setTimeout(()=>{document.querySelectorAll('#loginUserList [data-login-id],[data-login-user],.role-btn').forEach(b=>{const txt=(b.textContent||'').trim();if(txt.includes(u.name))b.click()});document.querySelectorAll('#currentUserText,#roleIndicatorText').forEach(x=>{if(x)x.textContent=u.name})},250)})})();
+</script>
+<link rel="stylesheet" href="../../assets/v21-global.css?v=21">
+</head>
+<body>
+<header><h1>الفرص والمشروعات الحكومية</h1><a class="back" href="../../index.html">العودة للرئيسية</a></header>
+<main>
+<section class="hero">
+<h2 style="margin-top:0">متابعة تلقائية لمنصتي فرص واستطلاع</h2>
+<p>تتحدث البيانات آلياً بواسطة GitHub Actions مرتين يومياً. يعرض النظام الفرص الاستثمارية والمشروعات التنظيمية المرتبطة بالنشاط الرياضي والتجاري والتراخيص والسلامة.</p>
+<div class="status">
+<span class="pill" id="updated">آخر تحديث: لم يتم التشغيل بعد</span>
+<span class="pill" id="count">0 نتيجة</span>
+<span class="pill" id="syncStatus">في انتظار أول مزامنة</span>
+</div>
+</section>
+
+<div class="tools">
+<input id="search" placeholder="ابحث باسم المشروع أو المدينة أو الجهة...">
+<select id="score"><option value="0">جميع درجات الصلة</option><option value="2">صلة متوسطة فأعلى</option><option value="4">صلة عالية</option></select>
+</div>
+<div class="tabs">
+<button class="tab active" data-source="all">الكل</button>
+<button class="tab" data-source="فرص">فرص</button>
+<button class="tab" data-source="استطلاع">استطلاع</button>
+<button class="tab" data-source="saved">المحفوظة</button>
+</div>
+<section class="grid" id="grid"><div class="empty">جارٍ تحميل ملف البيانات...</div></section>
+</main>
+<footer>جميع الحقوق محفوظة للمطور sultanms29 © 2026</footer>
+<script>
+let DATA=[], active='all';
+const savedKey='sultanms29-saved-government-opportunities';
+const saved=()=>JSON.parse(localStorage.getItem(savedKey)||'[]');
+function esc(v){return String(v||'').replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]))}
+function render(){
+ const q=document.getElementById('search').value.trim().toLowerCase();
+ const min=Number(document.getElementById('score').value||0);
+ const ids=saved();
+ let rows=DATA.filter(x=>{
+   if(active==='saved'&&!ids.includes(x.id))return false;
+   if(!['all','saved'].includes(active)&&x.source!==active)return false;
+   if((x.relevance_score||0)<min)return false;
+   const text=[x.title,x.summary,(x.matched_keywords||[]).join(' ')].join(' ').toLowerCase();
+   return !q||text.includes(q);
+ });
+ document.getElementById('count').textContent=rows.length+' نتيجة';
+ document.getElementById('grid').innerHTML=rows.length?rows.map(x=>`
+ <article class="card">
+  <div class="image" ${x.image?`style="background-image:linear-gradient(rgba(0,0,0,.28),rgba(0,0,0,.55)),url('${esc(x.image)}')"`:''}>${x.image?'':esc(x.source)}</div>
+  <div class="content">
+   <span class="source">${esc(x.source)} · درجة الصلة ${x.relevance_score||0}</span>
+   <h3 class="title">${esc(x.title)}</h3>
+   <div class="summary">${esc(x.summary)}</div>
+   <div class="keywords">${(x.matched_keywords||[]).map(k=>`<span class="keyword">${esc(k)}</span>`).join('')}</div>
+   <div class="actions">
+    <a class="btn" target="_blank" rel="noopener" href="${esc(x.url)}">فتح في المنصة الأصلية</a>
+    <button class="btn alt" onclick="toggleSave('${x.id}')">${ids.includes(x.id)?'إزالة من المحفوظة':'حفظ المشروع'}</button>
+    <button class="btn alt" onclick="addToProjects('${x.id}')">إضافة لمتابعة المشاريع</button>
+   </div>
+  </div>
+ </article>`).join(''):`<div class="empty">لا توجد نتائج مطابقة حالياً.</div>`;
+}
+function toggleSave(id){
+ let ids=saved(); ids=ids.includes(id)?ids.filter(x=>x!==id):[id,...ids];
+ localStorage.setItem(savedKey,JSON.stringify(ids));render();
+}
+function addToProjects(id){
+ const x=DATA.find(v=>v.id===id);if(!x)return;
+ const key='sultanms29-project-candidates';
+ const arr=JSON.parse(localStorage.getItem(key)||'[]');
+ if(!arr.some(v=>v.id===x.id))arr.unshift({...x,added_at:new Date().toISOString(),status:'مرشح للدراسة'});
+ localStorage.setItem(key,JSON.stringify(arr));
+ alert('تم حفظ المشروع كمرشح. يمكنك فتح نظام متابعة المشاريع وإضافته للسجل التنفيذي.');
+}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');active=b.dataset.source;render()});
+document.getElementById('search').oninput=render;document.getElementById('score').onchange=render;
+fetch('../../data/opportunities.json?ts='+Date.now()).then(r=>{if(!r.ok)throw Error(r.status);return r.json()}).then(d=>{
+ DATA=[...(d.furas||[]),...(d.istitlaa||[])];
+ document.getElementById('updated').textContent='آخر تحديث: '+(d.updated_at?new Date(d.updated_at).toLocaleString('ar-SA'):'لم يتم التشغيل بعد');
+ document.getElementById('syncStatus').textContent=d.status==='ok'?'المزامنة تعمل':d.status==='partial'?'تحديث جزئي':'في انتظار أول مزامنة';
+ render();
+}).catch(e=>{
+ document.getElementById('grid').innerHTML='<div class="empty">تعذر قراءة ملف البيانات. شغّل إجراء GitHub Actions لأول مرة من تبويب Actions.</div>';
+ document.getElementById('syncStatus').textContent='يلزم تشغيل المزامنة';
+});
+</script>
+
+<script id="v11-ultimate-ux-script">
+(()=>{
+'use strict';
+if(window.__V11_ULTIMATE__)return;window.__V11_ULTIMATE__=true;
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const editable='input:not([disabled]):not([readonly]):not([type="hidden"]),textarea:not([disabled]):not([readonly]),select:not([disabled]),[contenteditable="true"]';
+const dialogSel='.overlay,.portal-modal,[class*="modal-overlay"],dialog,[role="dialog"]';
+const visible=el=>!!el&&(el.open||el.classList.contains('show')||el.classList.contains('active')||getComputedStyle(el).display!=='none')&&getComputedStyle(el).visibility!=='hidden';
+
+// Full-field hit target: touching any empty area inside a field focuses the actual control immediately.
+document.addEventListener('pointerdown',e=>{
+ const target=e.target;if(target.closest('button,a,[role="button"],input,textarea,select,label,[contenteditable="true"]'))return;
+ const shell=target.closest('.field,.form-group,.input-group,.portal-field,.control-group,.search-box,.filter-group');
+ if(!shell)return;const control=$(editable,shell);if(!control||control.offsetParent===null)return;
+ e.preventDefault();control.focus({preventScroll:true});
+ if(control.tagName==='INPUT'&&typeof control.setSelectionRange==='function'){const n=control.value.length;try{control.setSelectionRange(n,n)}catch(_){}}
+ requestAnimationFrame(()=>control.scrollIntoView({block:'center',inline:'nearest'}));
+},{capture:true,passive:false});
+
+document.addEventListener('focusin',e=>{const c=e.target.closest?.(editable);if(!c)return;const s=c.closest('.field,.form-group,.input-group,.portal-field,.control-group')||c;s.classList.add('v11-focus-shell');setTimeout(()=>{try{c.scrollIntoView({block:'center',inline:'nearest'})}catch(_){}},220)},true);
+document.addEventListener('focusout',e=>{const s=e.target.closest?.('.field,.form-group,.input-group,.portal-field,.control-group');setTimeout(()=>s?.classList.remove('v11-focus-shell'),80)},true);
+
+// Single-window manager: opening a new modal closes any previous modal in an orderly way.
+let switching=false;
+function closeLayer(layer){if(!layer||!visible(layer))return;layer.classList.add('v11-closing');setTimeout(()=>{layer.classList.remove('show','active','open','v11-closing');if(layer.tagName==='DIALOG'&&layer.open)try{layer.close()}catch(_){}},145)}
+function enforceSingle(active){if(switching||!active||!visible(active))return;switching=true;$$(`.overlay.show,.portal-modal.show,[class*="modal-overlay"].show,dialog[open],[role="dialog"].show`).forEach(x=>{if(x!==active)closeLayer(x)});setTimeout(()=>switching=false,170)}
+const layerObserver=new MutationObserver(records=>{for(const r of records){const el=r.target;if(el.matches?.(dialogSel)&&visible(el))enforceSingle(el)}});
+function watchLayers(root=document){$$(dialogSel,root).forEach(x=>{if(!x.dataset.v11watched){x.dataset.v11watched='1';layerObserver.observe(x,{attributes:true,attributeFilter:['class','open','style']})}})}
+
+// Mobile navigation with one-tap close.
+function installNav(){const side=$('.sidebar'),toggle=$('#menuToggle,.menu-toggle');if(!side||!toggle)return;if(!$('.v11-nav-shade')){const shade=document.createElement('div');shade.className='v11-nav-shade';document.body.append(shade);const sync=()=>shade.classList.toggle('show',side.classList.contains('open'));toggle.addEventListener('click',()=>requestAnimationFrame(sync));shade.addEventListener('click',()=>{side.classList.remove('open');sync()});side.addEventListener('click',e=>{if(e.target.closest('.nav-item,a,button')&&matchMedia('(max-width:980px)').matches)setTimeout(()=>{side.classList.remove('open');sync()},40)});new MutationObserver(sync).observe(side,{attributes:true,attributeFilter:['class']})}}
+
+// Shared Supabase credentials: configure once per device; each application keeps its own workspace id.
+const MASTER='scc-v11-supabase-master';
+const cfgKeys=['srco-license-sync-cfg','srco-projects-supabase-cfg','srco-contracts-supabase-cfg','srco-cases-supabase-cfg','srco-shomoos-supabase-cfg','scc-home-cloud-v4','srco-opportunities-supabase-cfg'];
+function parse(v){try{return JSON.parse(v||'')}catch(_){return null}}
+function normalize(c){if(!c)return null;return {projectUrl:c.projectUrl||c.url||'',anonKey:c.anonKey||c.key||'',workspaceId:c.workspaceId||''}}
+function syncCredentials(){let master=normalize(parse(localStorage.getItem(MASTER)));if(!master?.projectUrl||!master?.anonKey){for(const k of cfgKeys){const c=normalize(parse(localStorage.getItem(k)));if(c?.projectUrl&&c?.anonKey){master=c;localStorage.setItem(MASTER,JSON.stringify(master));break}}}if(!master?.projectUrl||!master?.anonKey)return;for(const k of cfgKeys){const raw=parse(localStorage.getItem(k));if(!raw)continue;let changed=false;if('url'in raw){if(!raw.url){raw.url=master.projectUrl;changed=true}if(!raw.key){raw.key=master.anonKey;changed=true}}else{if(!raw.projectUrl){raw.projectUrl=master.projectUrl;changed=true}if(!raw.anonKey){raw.anonKey=master.anonKey;changed=true}}if(changed)localStorage.setItem(k,JSON.stringify(raw))}}
+function captureCredentials(){const url=$('#cfgProjectUrl'),key=$('#cfgAnonKey');if(!url||!key)return;const u=url.value.trim(),k=key.value.trim();if(u&&k)localStorage.setItem(MASTER,JSON.stringify({projectUrl:u,anonKey:k}))}
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(/حفظ|تفعيل|اختبار الاتصال|مزامنة الآن/.test(b.textContent||''))captureCredentials()},true);
+
+// Prevent repeated submits but never block the first click.
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.disabled||!/حفظ|إضافة|تحديث|تفعيل|مزامنة/.test(b.textContent||''))return;if(b.dataset.v11busy==='1'){e.preventDefault();e.stopImmediatePropagation();return}b.dataset.v11busy='1';b.classList.add('v11-busy');setTimeout(()=>{b.dataset.v11busy='0';b.classList.remove('v11-busy')},700)},false);
+
+// Keep rendering work off the scrolling path.
+let scheduled=false;const domObserver=new MutationObserver(()=>{if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;watchLayers();installNav()})});
+function init(){syncCredentials();watchLayers();installNav();domObserver.observe(document.body,{subtree:true,childList:true});document.documentElement.dataset.v11='ultimate';}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+window.addEventListener('storage',e=>{if(e.key===MASTER||cfgKeys.includes(e.key))syncCredentials()});
+})();
+</script>
+
+<script id="v12-enterprise-ui-script">
+(()=>{
+ const HOME='../../index.html';
+ const isRoot=!location.pathname.includes('/apps/');
+ const qs=(s,r=document)=>r.querySelector(s), qsa=(s,r=document)=>[...r.querySelectorAll(s)];
+ function addDock(){
+   if(isRoot||qs('.v12-tool-dock'))return;
+   const d=document.createElement('div');d.className='v12-tool-dock';
+   d.innerHTML=`<a class="v12-tool" title="الصفحة الرئيسية" aria-label="الصفحة الرئيسية" href="${HOME}">⌂</a><button class="v12-tool v12-refresh" title="تحديث البيانات" aria-label="تحديث البيانات">↻</button>`;
+   document.body.appendChild(d);
+   qs('.v12-refresh',d).onclick=()=>{const candidates=qsa('button').filter(b=>/مزامنة|تحديث البيانات|تحديث الآن/.test(b.textContent||''));if(candidates[0])candidates[0].click();else location.reload()};
+ }
+ function addLoginHome(){
+   qsa('#roleGate,[id*="loginOverlay"],[id*="userPicker"],[id*="loginScreen"]').forEach(g=>{
+    if(g.querySelector('.v12-login-home'))return; const a=document.createElement('a');a.className='v12-tool v12-login-home';a.href=HOME;a.title='الرجوع للصفحة الرئيسية';a.textContent='⌂';g.appendChild(a);
+   });
+ }
+ function centerDeclaration(){
+   qsa('section,div,fieldset').forEach(el=>{const t=(el.textContent||'').trim();if(t.length<650&&/إقرار/.test(t)&&(/شموس|أقر|التزام/.test(t)))el.classList.add('v12-center-declaration')});
+ }
+ function activeLayers(){return qsa('.overlay.show,.portal-modal.show,[class*="modal-overlay"].show,[role="dialog"].show,dialog[open]')}
+ function cleanupGhosts(active){
+   activeLayers().forEach(x=>{if(x!==active){x.classList.remove('show');x.removeAttribute('open');x.style.removeProperty('display')}});
+   qsa('select').forEach(s=>{if(active&&!active.contains(s)&&!s.closest('.sidebar,.topbar'))s.blur()});
+   document.body.classList.toggle('v12-modal-open',!!active);
+ }
+ const obs=new MutationObserver(()=>{const a=activeLayers().at(-1);cleanupGhosts(a);addLoginHome()});
+ obs.observe(document.documentElement,{subtree:true,attributes:true,attributeFilter:['class','open','style']});
+ document.addEventListener('pointerdown',e=>{
+   const box=e.target.closest('.field,.form-group,.input-group,.portal-field');
+   if(box&&!e.target.matches('input,select,textarea,button,a')){const c=box.querySelector('input:not([type=hidden]),select,textarea');if(c){e.preventDefault();c.focus();if(c.tagName==='SELECT'&&c.showPicker)try{c.showPicker()}catch(_){}}}
+ },true);
+ document.addEventListener('focusin',e=>{const a=activeLayers().at(-1);if(a&&!a.contains(e.target)&&!e.target.closest('.v12-tool-dock')){const f=a.querySelector('input:not([type=hidden]),select,textarea,button');if(f)f.focus()}},true);
+ function footer(){if(!isRoot||qs('.v12-version-footer'))return;const f=document.createElement('footer');f.className='v12-version-footer';f.textContent='منصة العلاقات العامة والحكومية — الإصدار 12 Enterprise';document.body.appendChild(f)}
+ addDock();addLoginHome();centerDeclaration();footer();
+ setTimeout(()=>{addDock();addLoginHome();centerDeclaration()},700);
+})();
+</script>
+
+
+<style id="v16-final-stable-style">
+/* Final stable UI: remove legacy floating controls that caused overlaps */
+.v42-account-btn,.v8-home-btn,.v8-sync-btn,.v8-user-chip,.v12-tool-dock,.portal-home-btn{display:none!important}
+.topbar{gap:12px!important;align-items:center!important}
+.topbar .search-box{margin-inline-start:auto!important;flex:0 1 430px!important;min-width:210px!important}
+.v16-top-actions{display:flex;align-items:center;gap:8px;flex:none}
+.v16-home-btn{height:40px;min-width:116px;padding:0 15px;border:1px solid var(--border)!important;border-radius:999px;background:var(--surface)!important;color:var(--text)!important;display:inline-flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-size:12.5px;font-weight:800;text-decoration:none;box-shadow:none;transition:.2s}
+.v16-home-btn:hover{border-color:var(--gold-dim)!important;color:var(--gold-bright)!important;background:var(--bg-elevated)!important}
+.v16-home-btn .v16-home-icon{font-size:16px;line-height:1}
+.overlay.show,.portal-modal.show,[class*="modal-overlay"].show,[role="dialog"].show{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+.overlay:not(.show),.portal-modal:not(.show),[class*="modal-overlay"]:not(.show){pointer-events:none}
+body.v16-modal-open{overflow:hidden}
+@media(max-width:760px){
+ .topbar{flex-wrap:wrap!important;padding:12px 14px!important}
+ .topbar>div:first-of-type{min-width:0;flex:1}
+ .topbar .search-box{order:4;flex:1 1 100%!important;max-width:none!important}
+ .v16-home-btn{min-width:44px;width:44px;padding:0;font-size:0}
+ .v16-home-btn .v16-home-icon{font-size:18px}
+ .bell-topbar,.role-indicator{flex:none}
+}
+</style>
+
+
+<script id="v16-final-stable-script">
+(()=>{
+'use strict';
+if(window.__V16_FINAL_STABLE__)return;window.__V16_FINAL_STABLE__=true;
+const HOME='../../index.html';
+const q=(s,r=document)=>r.querySelector(s), qa=(s,r=document)=>[...r.querySelectorAll(s)];
+
+function installTopHome(){
+ const top=q('.topbar'); const search=q('.search-box',top||document); if(!top||!search||q('.v16-home-btn',top))return;
+ let actions=q('.v16-top-actions',top); if(!actions){actions=document.createElement('div');actions.className='v16-top-actions';search.insertAdjacentElement('afterend',actions)}
+ const a=document.createElement('a');a.className='v16-home-btn';a.href=HOME;a.title='الصفحة الرئيسية';a.setAttribute('aria-label','الصفحة الرئيسية');a.innerHTML='<span class="v16-home-icon">⌂</span><span>الصفحة الرئيسية</span>';actions.appendChild(a);
+}
+function showLayer(el){
+ if(!el)return false;
+ el.hidden=false;el.removeAttribute('hidden');el.style.removeProperty('display');el.style.removeProperty('visibility');el.style.removeProperty('opacity');el.style.removeProperty('pointer-events');
+ el.classList.add('show');el.setAttribute('aria-hidden','false');document.body.classList.add('v16-modal-open');
+ const focus=q('input:not([type="hidden"]),select,textarea,button',el);setTimeout(()=>{try{focus?.focus({preventScroll:true})}catch(_){}},30);return true;
+}
+function hideLayer(el){
+ if(!el)return false;el.classList.remove('show','active','open','v11-closing');el.setAttribute('aria-hidden','true');el.style.removeProperty('display');
+ if(el.tagName==='DIALOG'&&el.open)try{el.close()}catch(_){}
+ if(!q('.overlay.show,.portal-modal.show,[class*="modal-overlay"].show,[role="dialog"].show,dialog[open]'))document.body.classList.remove('v16-modal-open');return true;
+}
+window.openModal=function(id){return showLayer(document.getElementById(id))};
+window.closeModal=function(id){return hideLayer(document.getElementById(id))};
+
+// Reliable close handling without relying on fragile per-render listeners.
+document.addEventListener('click',e=>{const c=e.target.closest('[data-close],.modal-close,.close-modal');if(!c)return;const layer=c.closest('.overlay,.portal-modal,[class*="modal-overlay"],[role="dialog"],dialog');if(layer){e.preventDefault();e.stopPropagation();hideLayer(layer)}},true);
+
+// Licenses: delegated fallback for every dynamically rendered add button.
+document.addEventListener('click',e=>{
+ const b=e.target.closest('#addEntBtn,[data-add-type]');if(!b||typeof window.openEntityModal!=='function')return;
+ const type=b.dataset.addType || window.currentView; if(!type)return;
+ e.preventDefault();e.stopImmediatePropagation();
+ const branch=b.dataset.addBranch||null;
+ const branchLayer=b.closest('#modalBranch');if(branchLayer)hideLayer(branchLayer);
+ try{window.openEntityModal(type,null,branch);const modal=document.getElementById('modalEntity');showLayer(modal)}catch(err){console.error('V16 add modal failure',err);alert('تعذر فتح نافذة الإضافة. أعد تحميل الصفحة ثم حاول مرة أخرى.')} 
+},true);
+
+// Remove stale inline display:none left by previous modal managers.
+function repairLayers(){qa('.overlay,.portal-modal,[class*="modal-overlay"],[role="dialog"],dialog').forEach(el=>{if(el.classList.contains('show')||el.open){el.hidden=false;el.style.removeProperty('display');el.style.removeProperty('visibility');el.style.removeProperty('opacity')}})}
+const obs=new MutationObserver(()=>{installTopHome();repairLayers()});
+function init(){installTopHome();repairLayers();obs.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style','hidden','open']})}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+</script>
+
+
+<style id="v18-shared-theme-style">
+html[data-scc-theme="royal"]{--gold:#8E5CFF;--gold-bright:#C4A9FF;--gold-dim:#7A50D8;--bg:#110D19;--bg-elevated:#21182E;--surface:#1A1325;--border:#3A2C4C;--text:#F8F3FF;--text-muted:#B5A9C5}
+html[data-scc-theme="ocean"]{--gold:#19B8C7;--gold-bright:#75E4EE;--gold-dim:#1596A2;--bg:#06171E;--bg-elevated:#102B35;--surface:#0A2029;--border:#244651;--text:#EFFDFF;--text-muted:#9EBBC1}
+html[data-scc-theme="burgundy"]{--gold:#B6495A;--gold-bright:#EE8B9A;--gold-dim:#933A48;--bg:#190C10;--bg-elevated:#30171D;--surface:#241116;--border:#513039;--text:#FFF4F5;--text-muted:#C6A6AC}
+html[data-scc-theme="executive"]{--gold:#2F80ED;--gold-bright:#76B5FF;--gold-dim:#2567BD}
+html[data-scc-theme="sport"]{--gold:#2EAD67;--gold-bright:#7DE3A7;--gold-dim:#238750}
+body,input,select,textarea,button{font-family:"Cairo","Tahoma",sans-serif!important}body{line-height:1.65}.panel,.card,.case-row,.branch-card,.contract-card{letter-spacing:.01em}
+</style>
+<script id="v18-shared-theme-script">(()=>{const apply=()=>document.documentElement.dataset.sccTheme=localStorage.getItem('scc_theme_v2')||'formal';apply();addEventListener('storage',e=>{if(e.key==='scc_theme_v2')apply()})})();</script>
+</body>
+</html>
