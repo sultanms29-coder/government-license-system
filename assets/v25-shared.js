@@ -1,0 +1,11 @@
+(()=>{
+ const THEMES={formal:{a:'#D4AF37',a2:'#EBCB6B',rgb:'212,175,55',bg:'#0F1419'},executive:{a:'#2F80ED',a2:'#76B5FF',rgb:'47,128,237',bg:'#F4F7FB'},sport:{a:'#2EAD67',a2:'#7DE3A7',rgb:'46,173,103',bg:'#F4F8F5'},royal:{a:'#8E5CFF',a2:'#C4A9FF',rgb:'142,92,255',bg:'#151020'},ocean:{a:'#19B8C7',a2:'#75E4EE',rgb:'25,184,199',bg:'#071B24'},burgundy:{a:'#B6495A',a2:'#EE8B9A',rgb:'182,73,90',bg:'#211014'}};
+ function apply(name){const t=THEMES[name]||THEMES.formal,r=document.documentElement;r.dataset.theme=THEMES[name]?name:'formal';r.style.setProperty('--accent',t.a);r.style.setProperty('--accent2',t.a2);r.style.setProperty('--accent-rgb',t.rgb);document.querySelector('meta[name="theme-color"]')?.setAttribute('content',t.bg)}
+ apply(localStorage.getItem('scc_theme_v2')||'formal');
+ addEventListener('storage',e=>{if(e.key==='scc_theme_v2')apply(e.newValue||'formal')});
+ addEventListener('scc:theme-changed',e=>apply(e.detail||localStorage.getItem('scc_theme_v2')||'formal'));
+ function text(){let title=(document.getElementById('topbarTitle')?.textContent||document.title||'منصة العلاقات العامة والحكومية').trim();let items=[...document.querySelectorAll('.alert-row,.case-row,.contract-card,.branch-card,.card')].slice(0,8).map(x=>x.innerText.replace(/\s+/g,' ').trim()).filter(Boolean);return `${title}\n${items.length?items.join('\n• '):'يرجى الاطلاع على التنبيهات والتحديثات داخل النظام.'}\n${location.href}`}
+ function share(kind){const body=text(),sub=encodeURIComponent('تنبيهات منصة العلاقات العامة والحكومية');if(kind==='mail')location.href=`mailto:?subject=${sub}&body=${encodeURIComponent(body)}`;else window.open(`https://wa.me/?text=${encodeURIComponent(body)}`,'_blank','noopener')}
+ function mount(){if(document.querySelector('.v25-share-tools')||location.pathname.endsWith('/index.html')&&location.pathname.split('/').length<3)return;const d=document.createElement('div');d.className='v25-share-tools';d.innerHTML='<button type="button" data-v25-share="wa">واتساب 🟢</button><button type="button" data-v25-share="mail">البريد ✉️</button>';d.onclick=e=>{const k=e.target.closest('[data-v25-share]')?.dataset.v25Share;if(k)share(k==='wa'?'wa':'mail')};document.body.appendChild(d)}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
+})();

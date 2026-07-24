@@ -1,0 +1,10 @@
+
+/* V25 unified themes + sharing */
+:root{--v25-male:#ffd21f;--v25-female:#ed168c}
+.v25-share-tools{position:fixed;left:18px;bottom:18px;z-index:9997;display:flex;gap:8px;direction:rtl}
+.v25-share-tools button{border:1px solid var(--page-border,rgba(255,255,255,.18));background:var(--page-surface,#141a20);color:var(--page-text,#fff);border-radius:999px;padding:9px 12px;box-shadow:0 8px 24px rgba(0,0,0,.22);cursor:pointer;font:inherit;font-size:12px}
+.v25-share-tools button:hover{transform:translateY(-2px)}
+.branch-card.v25-male{border:2px solid var(--v25-male)!important;box-shadow:0 0 0 1px rgba(255,210,31,.18),var(--shadow-pop,0 10px 25px rgba(0,0,0,.18))}
+.branch-card.v25-female{border:2px solid var(--v25-female)!important;box-shadow:0 0 0 1px rgba(237,22,140,.18),var(--shadow-pop,0 10px 25px rgba(0,0,0,.18))}
+.v17-branch-logo{object-fit:contain;background:transparent!important}
+@media(max-width:600px){.v25-share-tools{left:10px;bottom:10px}.v25-share-tools button{padding:8px 10px;font-size:11px}}
