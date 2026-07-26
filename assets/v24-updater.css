@@ -1,0 +1,10 @@
+
+.v24-update-wrap{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px}
+.v24-update-btn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(212,175,55,.38);background:rgba(255,255,255,.055);color:#d4af37;display:inline-grid;place-items:center;cursor:pointer;transition:.2s ease;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.v24-update-btn:hover{transform:translateY(-1px);background:rgba(212,175,55,.12)}
+.v24-update-btn:focus-visible{outline:3px solid rgba(212,175,55,.35);outline-offset:3px}
+.v24-update-btn svg{width:18px;height:18px}.v24-update-btn.is-busy svg{animation:v24spin .8s linear infinite}.v24-update-label{font-size:11px;color:#aab3bb}
+.v24-update-status{min-height:18px;margin-top:7px;text-align:center;font-size:11px;color:#c9d0d6}
+.v24-update-status.ok{color:#78d69b}.v24-update-status.err{color:#ff9b9b}
+.v24-update-dot{position:absolute;width:8px;height:8px;border-radius:50%;background:#e5b93f;border:2px solid #12161b;transform:translate(11px,-11px);display:none}.v24-update-btn.has-update .v24-update-dot{display:block}
+@keyframes v24spin{to{transform:rotate(360deg)}}
