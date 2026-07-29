@@ -1,0 +1,37 @@
+/* V25.1 unified themes, mobile-only refinement and brand borders */
+:root{--v25-male:#ffd21f;--v25-female:#ed168c}
+.v25-share-tools,[data-v25-share]{display:none!important}
+.branch-card.v25-male{border:2px solid var(--v25-male)!important;box-shadow:0 0 0 1px rgba(255,210,31,.18),var(--shadow-pop,0 10px 25px rgba(0,0,0,.18))}
+.branch-card.v25-female{border:2px solid var(--v25-female)!important;box-shadow:0 0 0 1px rgba(237,22,140,.18),var(--shadow-pop,0 10px 25px rgba(0,0,0,.18))}
+.v17-branch-logo{object-fit:contain;background:transparent!important}
+.v251-version-footer{width:min(1320px,calc(100% - 32px));box-sizing:border-box;margin:28px auto 12px;padding:10px 2px 4px;text-align:right;direction:rtl;font-size:11px;font-weight:800;opacity:.72;border-top:1px solid var(--page-border,rgba(255,255,255,.10));color:var(--page-muted,#8e99a4)}
+
+/* حركة دائرية ديناميكية احترافية للأنظمة المترابطة — الصفحة الرئيسية فقط */
+.executive-orbit .orbit-label{top:50%!important;left:50%!important;right:auto!important;bottom:auto!important;margin:0!important;offset-path:circle(43% at 50% 50%);offset-rotate:0deg;animation:v251OrbitFlow 18s linear infinite;will-change:offset-distance;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+.executive-orbit .orbit-label.o1{animation-delay:0s}
+.executive-orbit .orbit-label.o2{animation-delay:-3.6s}
+.executive-orbit .orbit-label.o3{animation-delay:-7.2s}
+.executive-orbit .orbit-label.o4{animation-delay:-10.8s}
+.executive-orbit .orbit-label.o5{animation-delay:-14.4s}
+@keyframes v251OrbitFlow{from{offset-distance:0%}to{offset-distance:100%}}
+
+/* تحسين الجوال فقط؛ لا يغيّر عرض الكمبيوتر */
+@media(max-width:768px){
+ html,body{width:100%;max-width:100%;overflow-x:hidden!important}
+ body{box-sizing:border-box}
+ *,*::before,*::after{box-sizing:border-box;max-width:100%}
+ .wrap,.container,.page,.page-shell,.app-shell,main,.main,.content,.content-wrap,.dashboard,.dashboard-wrap{width:100%!important;max-width:100%!important;margin-inline:auto!important;padding-inline:10px!important}
+ .header,.topbar,.toolbar,.hero,.identity-showcase,.about-card,.org-card,.system-card,.card,.panel,.section,.modal-card,.modal-content,.portal-modal-card,.sync-box{max-width:100%!important}
+ .systems,.grid,.cards-grid,.dashboard-grid,.stats-grid,.form-grid,.filters-grid{grid-template-columns:1fr!important;gap:12px!important}
+ input,select,textarea,button{max-width:100%!important;font-size:16px}
+ img,video,canvas,svg{max-width:100%;height:auto}
+ table{display:block;width:100%!important;max-width:100%!important;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+ th,td{min-width:110px}
+ .modal,.overlay,.portal-modal,[role="dialog"]{padding:10px!important}
+ .modal-card,.modal-content,.portal-modal-card,[role="dialog"]>div{width:calc(100vw - 20px)!important;max-width:calc(100vw - 20px)!important;margin-inline:auto!important}
+ .executive-visual{min-height:300px!important;overflow:hidden}
+ .executive-orbit{width:min(270px,82vw)!important;height:min(270px,82vw)!important;margin:auto}
+ .executive-orbit .orbit-label{font-size:9px!important;padding:7px 9px!important;offset-path:circle(41% at 50% 50%)}
+ .v251-version-footer{width:calc(100% - 20px);margin-top:22px;padding-top:9px;font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){.executive-orbit .orbit-label{animation-duration:45s!important}}
