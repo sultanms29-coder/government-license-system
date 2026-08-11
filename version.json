@@ -1,6 +1,0 @@
-{
-  "version": "28.18.18",
-  "build": "20260810",
-  "name": "Stable Auth Stage & Auto Sync Fix",
-  "notes": "Permanent two-stage authentication fix: preserves owner credential independently from cloud user sync, prevents return to owner setup after activation, keeps classic systems layout and automatic synchronization."
-}
