@@ -1,0 +1,8 @@
+{
+  "version": "28.18.38",
+  "build": "agreements-secure-legal-ai-rewrite",
+  "name": "Secure Legal AI Drafting for Agreements",
+  "notes": "إضافة تحسين الصياغة القانونية بالذكاء الاصطناعي في نظام الاتفاقيات مع مقارنة النص الأصلي والمقترح، اعتماد يدوي، إعادة تحسين، وحماية مفتاح API عبر Supabase Edge Function مع تحسين محلي احتياطي.",
+  "title": "Legal AI Drafting",
+  "updatedAt": "2026-08-22T17:10:00+03:00"
+}
