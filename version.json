@@ -1,7 +1,0 @@
-{
-  "version": "28.18.26",
-  "build": "Deletion Propagation + Fluid Content Gallery",
-  "name": "Deletion Propagation & Content Layout",
-  "notes": "الحذف من حساب المدير ينتشر لجميع الأجهزة ولا تعيد المزامنة السجلات المحذوفة، مع Tombstones مركزية داخل payload ونسخ أمان. كما تم تنسيق صور إدارة المحتوى لتملأ الإطار بالكامل ويتمدد تلقائياً حسب عدد الصور.",
-  "title": "الحذف الفوري وتنسيق الصور المرن"
-}
