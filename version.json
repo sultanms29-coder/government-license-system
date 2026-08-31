@@ -1,8 +1,0 @@
-{
-  "version": "28.18.42",
-  "build": "daily-work-v2-5-enterprise-sync",
-  "name": "Daily Work V2.5 + Enterprise Sync",
-  "notes": "دمج نظام متابعة الأعمال اليومية V2.5 ولوحة الأداء العامة مع مساحة مزامنة مستقلة alandiyah-daily-work، دمج آمن غير هدّام للسجلات، Realtime ومزامنة تلقائية من الصفحة الرئيسية، وإعادة هندسة شريط أخبار الإدارة ليعمل بحركة مستمرة دون توقف أو قفزة.",
-  "title": "Daily Work V2.5 Enterprise Integration",
-  "updatedAt": "2026-08-30T16:57:00+03:00"
-}
