@@ -1,4 +1,0 @@
-/* Sync remains active; only technical/transient sync UI is hidden. */
-.sync-status[data-scc-technical-sync],.scc-sync-transient{display:none!important}
-#toastWrap{position:fixed!important;contain:layout paint!important;pointer-events:none!important}
-#toastWrap .toast{pointer-events:auto}
